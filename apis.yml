@@ -1,5 +1,6 @@
 aid: target
-url: https://raw.githubusercontent.com/api-evangelist/target/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/target/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis:
   - aid: target:target-api
@@ -9,7 +10,8 @@ apis:
       - E-Commerce
       - Products
       - Inventory
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     baseURL: https://api.target.com
     humanURL: https://developer.target.com/
     properties:
@@ -18,4 +20,9 @@ apis:
       - url: openapi/target-target-api-openapi.yml
         type: OpenAPI
     description: >-
-      Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform.
+      Target provides partner APIs for product catalog access, inventory availability,
+      order management, and store information. These APIs enable technology partners
+      and affiliates to integrate with Target's retail platform.
+description: >-
+  Target is one of the largest retailers in the United States, offering a wide assortment
+  of general merchandise and food through stores and digital channels.
