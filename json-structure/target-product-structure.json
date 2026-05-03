@@ -1,0 +1,91 @@
+{
+  "name": "Target Product",
+  "description": "Structure documentation for the Target product resource",
+  "fields": [
+    {
+      "name": "tcin",
+      "type": "string",
+      "required": true,
+      "description": "Target Corporation Item Number — unique 8-digit product identifier"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Product title as displayed on Target.com"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Full product description text"
+    },
+    {
+      "name": "brand",
+      "type": "string",
+      "required": false,
+      "description": "Brand name"
+    },
+    {
+      "name": "category",
+      "type": "string",
+      "required": false,
+      "description": "Category hierarchy path (e.g., Electronics/Headphones/Wireless)"
+    },
+    {
+      "name": "dpci",
+      "type": "string",
+      "required": false,
+      "description": "Department-class-item number in format DDD-CC-IIII"
+    },
+    {
+      "name": "upc",
+      "type": "string",
+      "required": false,
+      "description": "Universal Product Code (12-13 digits)"
+    },
+    {
+      "name": "images",
+      "type": "array<ProductImage>",
+      "required": false,
+      "description": "Product images including primary, alternate, and lifestyle shots"
+    },
+    {
+      "name": "price",
+      "type": "Price",
+      "required": false,
+      "description": "Current and regular pricing information"
+    },
+    {
+      "name": "rating",
+      "type": "Rating",
+      "required": false,
+      "description": "Aggregated customer rating summary"
+    }
+  ],
+  "nested": {
+    "ProductImage": {
+      "fields": [
+        {"name": "url", "type": "string(uri)", "description": "Image CDN URL"},
+        {"name": "type", "type": "string", "description": "Image type: primary, alternate, lifestyle, swatch"},
+        {"name": "width", "type": "integer", "description": "Width in pixels"},
+        {"name": "height", "type": "integer", "description": "Height in pixels"}
+      ]
+    },
+    "Price": {
+      "fields": [
+        {"name": "current_retail", "type": "number", "description": "Current selling price"},
+        {"name": "regular_retail", "type": "number", "description": "Regular non-sale price"},
+        {"name": "sale_price", "type": "number", "description": "Sale price (if on sale)"},
+        {"name": "is_on_sale", "type": "boolean", "description": "Whether currently on sale"},
+        {"name": "currency", "type": "string", "description": "Currency code, defaults to USD"}
+      ]
+    },
+    "Rating": {
+      "fields": [
+        {"name": "average", "type": "number", "description": "Average rating 0-5"},
+        {"name": "count", "type": "integer", "description": "Number of reviews"}
+      ]
+    }
+  }
+}

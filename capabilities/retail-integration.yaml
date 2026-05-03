@@ -1,0 +1,281 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Target Retail Integration"
+  description: >-
+    Unified retail integration capability for Target partner integrations. Combines
+    product catalog, inventory availability, store locator, and order management APIs
+    into customer-facing workflows for e-commerce platforms, affiliate marketers,
+    and retail technology partners.
+  tags:
+    - E-Commerce
+    - Retail
+    - Products
+    - Inventory
+    - Stores
+    - Orders
+    - Target
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TARGET_API_TOKEN: TARGET_API_TOKEN
+
+capability:
+  consumes:
+    - import: target-api
+      location: ./shared/target-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: target-retail-api
+      description: "Unified REST API for Target retail integration workflows."
+      resources:
+        - path: /v1/products
+          name: products
+          description: "Browse and search Target product catalog"
+          operations:
+            - method: GET
+              name: list-products
+              description: "List products by TCINs, category, or brand"
+              call: "target-api.list-products"
+              with:
+                tcins: "rest.tcins"
+                category: "rest.category"
+                brand: "rest.brand"
+                limit: "rest.limit"
+                offset: "rest.offset"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: search-products
+              description: "Search products by keyword with filters"
+              call: "target-api.search-products"
+              with:
+                q: "rest.q"
+                category: "rest.category"
+                brand: "rest.brand"
+                price_min: "rest.price_min"
+                price_max: "rest.price_max"
+                sort_by: "rest.sort_by"
+                limit: "rest.limit"
+                offset: "rest.offset"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/products/{tcin}
+          name: product-detail
+          description: "Get detailed product information"
+          operations:
+            - method: GET
+              name: get-product
+              description: "Get full product details by TCIN"
+              call: "target-api.get-product"
+              with:
+                tcin: "rest.tcin"
+                store_id: "rest.store_id"
+                zip: "rest.zip"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/products/{tcin}/fulfillment
+          name: product-fulfillment
+          description: "Check product fulfillment options"
+          operations:
+            - method: GET
+              name: get-product-fulfillment
+              description: "Get fulfillment availability across all channels"
+              call: "target-api.get-product-fulfillment"
+              with:
+                tcin: "rest.tcin"
+                store_id: "rest.store_id"
+                zip: "rest.zip"
+                latitude: "rest.latitude"
+                longitude: "rest.longitude"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/stores
+          name: stores
+          description: "Find Target stores by location"
+          operations:
+            - method: GET
+              name: list-stores
+              description: "List nearby Target stores"
+              call: "target-api.list-stores"
+              with:
+                zip: "rest.zip"
+                latitude: "rest.latitude"
+                longitude: "rest.longitude"
+                radius: "rest.radius"
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/stores/{store_id}
+          name: store-detail
+          description: "Get Target store details"
+          operations:
+            - method: GET
+              name: get-store
+              description: "Get store hours, features, and contact info"
+              call: "target-api.get-store"
+              with:
+                store_id: "rest.store_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/orders
+          name: orders
+          description: "Manage partner orders"
+          operations:
+            - method: GET
+              name: list-orders
+              description: "List orders with status and date filters"
+              call: "target-api.list-orders"
+              with:
+                status: "rest.status"
+                from_date: "rest.from_date"
+                to_date: "rest.to_date"
+                limit: "rest.limit"
+                offset: "rest.offset"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/orders/{order_id}
+          name: order-detail
+          description: "Get order details"
+          operations:
+            - method: GET
+              name: get-order
+              description: "Get full order details including line items"
+              call: "target-api.get-order"
+              with:
+                order_id: "rest.order_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9080
+      namespace: target-retail-mcp
+      transport: http
+      description: "MCP server for AI-assisted Target retail integration."
+      tools:
+        - name: search-products
+          description: "Search Target's product catalog by keyword, category, price range, or brand"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.search-products"
+          with:
+            q: "tools.q"
+            category: "tools.category"
+            brand: "tools.brand"
+            price_min: "tools.price_min"
+            price_max: "tools.price_max"
+            sort_by: "tools.sort_by"
+            limit: "tools.limit"
+            offset: "tools.offset"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-products
+          description: "List Target products by TCINs or category filters"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.list-products"
+          with:
+            tcins: "tools.tcins"
+            category: "tools.category"
+            brand: "tools.brand"
+            limit: "tools.limit"
+            offset: "tools.offset"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-product
+          description: "Get full product details including price, images, and ratings by TCIN"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.get-product"
+          with:
+            tcin: "tools.tcin"
+            store_id: "tools.store_id"
+            zip: "tools.zip"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: check-product-availability
+          description: "Check product availability for ship-to-home, in-store pickup, and drive-up"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.get-product-fulfillment"
+          with:
+            tcin: "tools.tcin"
+            store_id: "tools.store_id"
+            zip: "tools.zip"
+            latitude: "tools.latitude"
+            longitude: "tools.longitude"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: find-stores
+          description: "Find Target stores near a ZIP code or geographic coordinates"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.list-stores"
+          with:
+            zip: "tools.zip"
+            latitude: "tools.latitude"
+            longitude: "tools.longitude"
+            radius: "tools.radius"
+            limit: "tools.limit"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-store-details
+          description: "Get Target store hours, features, and contact information"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.get-store"
+          with:
+            store_id: "tools.store_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-orders
+          description: "List partner orders filtered by status and date range"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "target-api.list-orders"
+          with:
+            status: "tools.status"
+            from_date: "tools.from_date"
+            to_date: "tools.to_date"
+            limit: "tools.limit"
+            offset: "tools.offset"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-order
+          description: "Get full details of a Target partner order including line items"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "target-api.get-order"
+          with:
+            order_id: "tools.order_id"
+          outputParameters:
+            - type: object
+              mapping: "$."

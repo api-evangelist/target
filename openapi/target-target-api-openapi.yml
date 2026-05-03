@@ -2,49 +2,777 @@ openapi: 3.1.0
 info:
   title: Target API
   description: >-
-    Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform.
+    Target provides partner APIs for product catalog access, inventory availability,
+    order management, and store information. These APIs enable technology partners
+    and affiliates to integrate with Target's retail platform. The Redsky aggregation
+    platform powers client-managed REST APIs built on GraphQL queries covering product,
+    price, promotion, and fulfillment data.
   version: '1.0'
   contact:
     name: Target Developer Support
     url: https://developer.target.com/
+  termsOfService: https://developer.target.com/terms
 externalDocs:
-  description: Documentation
+  description: Target Developer Portal
   url: https://developer.target.com/
 servers:
   - url: https://api.target.com
     description: Production
 tags:
-  - name: Retail
-    description: Retail operations
+  - name: Products
+    description: Product catalog and detail operations
+  - name: Inventory
+    description: Store and online inventory availability
+  - name: Stores
+    description: Store locator and store information
+  - name: Search
+    description: Product search and discovery
+  - name: Orders
+    description: Order management for partners
+  - name: Status
+    description: API health and status
 security:
   - bearerAuth: []
 paths:
   /status:
     get:
-      operationId: getStatus
-      summary: Get API status
-      description: >-
-        Returns the current status of the API.
+      operationId: getApiStatus
+      summary: Get API Status
+      description: Returns the current operational status of the Target API platform.
       tags:
-        - Retail
+        - Status
+      security: []
       responses:
         '200':
-          description: Success
+          description: API is operational
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  version:
-                    type: string
+                $ref: '#/components/schemas/ApiStatus'
+        '503':
+          description: Service unavailable
+  /products/v3/{tcin}:
+    get:
+      operationId: getProduct
+      summary: Get Product Details
+      description: >-
+        Retrieves detailed product information for a given TCIN (Target
+        Corporation Item Number) including title, description, images, pricing,
+        and attributes.
+      tags:
+        - Products
+      parameters:
+        - name: tcin
+          in: path
+          required: true
+          description: Target Corporation Item Number (TCIN)
+          schema:
+            type: string
+        - name: store_id
+          in: query
+          required: false
+          description: Store ID for localized pricing and availability
+          schema:
+            type: string
+        - name: zip
+          in: query
+          required: false
+          description: ZIP code for localized pricing
+          schema:
+            type: string
+        - name: fields
+          in: query
+          required: false
+          description: Comma-separated list of fields to return
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
         '401':
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '429':
-          description: Too many requests
+          $ref: '#/components/responses/TooManyRequests'
+  /products/v3:
+    get:
+      operationId: listProducts
+      summary: List Products
+      description: Returns a list of products by TCINs or other filter criteria.
+      tags:
+        - Products
+      parameters:
+        - name: tcins
+          in: query
+          required: false
+          description: Comma-separated list of TCINs
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          description: Category ID to filter products
+          schema:
+            type: string
+        - name: brand
+          in: query
+          required: false
+          description: Brand name to filter products
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of results
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: Offset for pagination
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /products/v3/{tcin}/fulfillment:
+    get:
+      operationId: getProductFulfillment
+      summary: Get Product Fulfillment
+      description: >-
+        Returns fulfillment and availability information for a product at a
+        specific store or for online delivery, including ship-to-home, in-store
+        pickup, and drive-up options.
+      tags:
+        - Inventory
+      parameters:
+        - name: tcin
+          in: path
+          required: true
+          description: Target Corporation Item Number
+          schema:
+            type: string
+        - name: store_id
+          in: query
+          required: false
+          description: Store ID for in-store availability
+          schema:
+            type: string
+        - name: zip
+          in: query
+          required: false
+          description: ZIP code for ship-to-home availability
+          schema:
+            type: string
+        - name: latitude
+          in: query
+          required: false
+          description: Latitude for nearby store lookup
+          schema:
+            type: number
+        - name: longitude
+          in: query
+          required: false
+          description: Longitude for nearby store lookup
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Fulfillment availability
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductFulfillment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /stores/v3:
+    get:
+      operationId: listStores
+      summary: List Stores
+      description: >-
+        Returns a list of Target stores optionally filtered by location, ZIP
+        code, or geographic coordinates.
+      tags:
+        - Stores
+      parameters:
+        - name: zip
+          in: query
+          required: false
+          description: ZIP code to search near
+          schema:
+            type: string
+        - name: latitude
+          in: query
+          required: false
+          description: Latitude for geographic search
+          schema:
+            type: number
+        - name: longitude
+          in: query
+          required: false
+          description: Longitude for geographic search
+          schema:
+            type: number
+        - name: radius
+          in: query
+          required: false
+          description: Search radius in miles
+          schema:
+            type: integer
+            default: 25
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of stores to return
+          schema:
+            type: integer
+            default: 10
+            maximum: 50
+      responses:
+        '200':
+          description: List of stores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /stores/v3/{store_id}:
+    get:
+      operationId: getStore
+      summary: Get Store Details
+      description: Returns detailed information about a specific Target store.
+      tags:
+        - Stores
+      parameters:
+        - name: store_id
+          in: path
+          required: true
+          description: Target store ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Store details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Store'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /products/v3/search:
+    get:
+      operationId: searchProducts
+      summary: Search Products
+      description: >-
+        Search Target's product catalog by keyword, category, brand, or other
+        criteria. Returns matching products with relevance scoring.
+      tags:
+        - Search
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Search query string
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          description: Category filter
+          schema:
+            type: string
+        - name: brand
+          in: query
+          required: false
+          description: Brand filter
+          schema:
+            type: string
+        - name: price_min
+          in: query
+          required: false
+          description: Minimum price filter
+          schema:
+            type: number
+        - name: price_max
+          in: query
+          required: false
+          description: Maximum price filter
+          schema:
+            type: number
+        - name: sort_by
+          in: query
+          required: false
+          description: Sort order
+          schema:
+            type: string
+            enum:
+              - relevance
+              - price_asc
+              - price_desc
+              - rating
+              - newest
+        - name: limit
+          in: query
+          required: false
+          description: Number of results per page
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          description: Pagination offset
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /orders/v1:
+    get:
+      operationId: listOrders
+      summary: List Orders
+      description: Returns orders for partner fulfillment or reporting purposes.
+      tags:
+        - Orders
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Filter by order status
+          schema:
+            type: string
+            enum:
+              - pending
+              - processing
+              - shipped
+              - delivered
+              - cancelled
+        - name: from_date
+          in: query
+          required: false
+          description: Start date filter (ISO 8601)
+          schema:
+            type: string
+            format: date
+        - name: to_date
+          in: query
+          required: false
+          description: End date filter (ISO 8601)
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          required: false
+          description: Maximum orders to return
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          required: false
+          description: Pagination offset
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /orders/v1/{order_id}:
+    get:
+      operationId: getOrder
+      summary: Get Order Details
+      description: Returns full details of a specific order including line items and status.
+      tags:
+        - Orders
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          description: Target order ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    ApiStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Current API status
+          enum:
+            - operational
+            - degraded
+            - outage
+        version:
+          type: string
+          description: API version
+        timestamp:
+          type: string
+          format: date-time
+          description: Status timestamp
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
+    ProductDetail:
+      type: object
+      properties:
+        tcin:
+          type: string
+          description: Target Corporation Item Number
+        title:
+          type: string
+          description: Product title
+        description:
+          type: string
+          description: Product description
+        brand:
+          type: string
+          description: Brand name
+        category:
+          type: string
+          description: Product category path
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+        price:
+          $ref: '#/components/schemas/Price'
+        rating:
+          $ref: '#/components/schemas/Rating'
+        dpci:
+          type: string
+          description: Department-class-item number
+        upc:
+          type: string
+          description: Universal Product Code
+    ProductImage:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Image URL
+        type:
+          type: string
+          description: Image type (primary, alternate, lifestyle)
+        width:
+          type: integer
+        height:
+          type: integer
+    Price:
+      type: object
+      properties:
+        current_retail:
+          type: number
+          description: Current retail price
+        regular_retail:
+          type: number
+          description: Regular (non-sale) retail price
+        sale_price:
+          type: number
+          description: Sale price if applicable
+        is_on_sale:
+          type: boolean
+          description: Whether the product is currently on sale
+        currency:
+          type: string
+          default: USD
+    Rating:
+      type: object
+      properties:
+        average:
+          type: number
+          description: Average customer rating (0-5)
+        count:
+          type: integer
+          description: Total number of ratings
+    ProductList:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetail'
+        total:
+          type: integer
+          description: Total number of matching products
+        limit:
+          type: integer
+        offset:
+          type: integer
+    ProductFulfillment:
+      type: object
+      properties:
+        tcin:
+          type: string
+          description: Target Corporation Item Number
+        ship_to_home:
+          $ref: '#/components/schemas/FulfillmentOption'
+        in_store_pickup:
+          $ref: '#/components/schemas/FulfillmentOption'
+        drive_up:
+          $ref: '#/components/schemas/FulfillmentOption'
+        same_day_delivery:
+          $ref: '#/components/schemas/FulfillmentOption'
+    FulfillmentOption:
+      type: object
+      properties:
+        available:
+          type: boolean
+          description: Whether this fulfillment option is available
+        quantity:
+          type: integer
+          description: Available quantity
+        estimated_date:
+          type: string
+          format: date
+          description: Estimated availability or delivery date
+    Store:
+      type: object
+      properties:
+        store_id:
+          type: string
+          description: Target store ID
+        name:
+          type: string
+          description: Store name
+        address:
+          $ref: '#/components/schemas/Address'
+        phone:
+          type: string
+          description: Store phone number
+        hours:
+          type: array
+          items:
+            $ref: '#/components/schemas/StoreHours'
+        latitude:
+          type: number
+          description: Store latitude
+        longitude:
+          type: number
+          description: Store longitude
+        features:
+          type: array
+          items:
+            type: string
+          description: Store features (pharmacy, Starbucks, optical, etc.)
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+          default: US
+    StoreHours:
+      type: object
+      properties:
+        day:
+          type: string
+          description: Day of week
+        open:
+          type: string
+          description: Opening time (HH:MM)
+        close:
+          type: string
+          description: Closing time (HH:MM)
+    StoreList:
+      type: object
+      properties:
+        stores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Store'
+        total:
+          type: integer
+    SearchResults:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetail'
+        total:
+          type: integer
+          description: Total matching results
+        limit:
+          type: integer
+        offset:
+          type: integer
+        facets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchFacet'
+    SearchFacet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Facet name (brand, category, price, etc.)
+        values:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              count:
+                type: integer
+    Order:
+      type: object
+      properties:
+        order_id:
+          type: string
+          description: Target order ID
+        status:
+          type: string
+          enum:
+            - pending
+            - processing
+            - shipped
+            - delivered
+            - cancelled
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineItem'
+        total_amount:
+          type: number
+          description: Total order amount
+        currency:
+          type: string
+          default: USD
+    OrderLineItem:
+      type: object
+      properties:
+        tcin:
+          type: string
+          description: Target Corporation Item Number
+        title:
+          type: string
+          description: Product title
+        quantity:
+          type: integer
+        unit_price:
+          type: number
+        total_price:
+          type: number
+        status:
+          type: string
+    OrderList:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer

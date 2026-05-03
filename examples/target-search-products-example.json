@@ -1,0 +1,81 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.target.com/products/v3/search",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Accept": "application/json"
+    },
+    "parameters": {
+      "q": "wireless headphones",
+      "category": "Electronics",
+      "price_max": 100,
+      "sort_by": "rating",
+      "limit": 5,
+      "offset": 0
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "total": 142,
+      "limit": 5,
+      "offset": 0,
+      "products": [
+        {
+          "tcin": "80779750",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Headphones",
+          "brand": "Sony",
+          "price": {
+            "current_retail": 279.99,
+            "regular_retail": 349.99,
+            "is_on_sale": true,
+            "currency": "USD"
+          },
+          "rating": {
+            "average": 4.9,
+            "count": 8721
+          }
+        },
+        {
+          "tcin": "77661234",
+          "title": "Beats Studio Pro Wireless Headphones",
+          "brand": "Beats",
+          "price": {
+            "current_retail": 199.99,
+            "regular_retail": 349.99,
+            "is_on_sale": true,
+            "currency": "USD"
+          },
+          "rating": {
+            "average": 4.7,
+            "count": 4320
+          }
+        }
+      ],
+      "facets": [
+        {
+          "name": "brand",
+          "values": [
+            {"value": "Sony", "count": 28},
+            {"value": "Beats", "count": 19},
+            {"value": "JBL", "count": 17},
+            {"value": "Bose", "count": 14}
+          ]
+        },
+        {
+          "name": "price",
+          "values": [
+            {"value": "Under $25", "count": 12},
+            {"value": "$25-$50", "count": 31},
+            {"value": "$50-$100", "count": 47},
+            {"value": "$100+", "count": 52}
+          ]
+        }
+      ]
+    }
+  }
+}

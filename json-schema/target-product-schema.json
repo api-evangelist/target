@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.target.com/schemas/product",
+  "title": "Target Product",
+  "description": "A product in the Target catalog identified by a TCIN (Target Corporation Item Number)",
+  "type": "object",
+  "required": ["tcin", "title"],
+  "properties": {
+    "tcin": {
+      "type": "string",
+      "description": "Target Corporation Item Number — unique identifier for a Target product"
+    },
+    "title": {
+      "type": "string",
+      "description": "Product title as displayed on Target.com"
+    },
+    "description": {
+      "type": "string",
+      "description": "Full product description"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Brand name of the product"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category path (e.g., Electronics/Headphones/Wireless)"
+    },
+    "dpci": {
+      "type": "string",
+      "description": "Department-class-item number",
+      "pattern": "^[0-9]{3}-[0-9]{2}-[0-9]{4}$"
+    },
+    "upc": {
+      "type": "string",
+      "description": "Universal Product Code",
+      "pattern": "^[0-9]{12,13}$"
+    },
+    "images": {
+      "type": "array",
+      "description": "Product images",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Image URL"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["primary", "alternate", "lifestyle", "swatch"],
+            "description": "Image type"
+          },
+          "width": {
+            "type": "integer",
+            "description": "Image width in pixels"
+          },
+          "height": {
+            "type": "integer",
+            "description": "Image height in pixels"
+          }
+        }
+      }
+    },
+    "price": {
+      "type": "object",
+      "description": "Product pricing information",
+      "properties": {
+        "current_retail": {
+          "type": "number",
+          "description": "Current retail price",
+          "minimum": 0
+        },
+        "regular_retail": {
+          "type": "number",
+          "description": "Regular (non-sale) retail price",
+          "minimum": 0
+        },
+        "sale_price": {
+          "type": "number",
+          "description": "Sale price if currently on sale",
+          "minimum": 0
+        },
+        "is_on_sale": {
+          "type": "boolean",
+          "description": "Whether the product is currently on sale"
+        },
+        "currency": {
+          "type": "string",
+          "default": "USD",
+          "description": "Currency code (ISO 4217)"
+        }
+      }
+    },
+    "rating": {
+      "type": "object",
+      "description": "Customer rating summary",
+      "properties": {
+        "average": {
+          "type": "number",
+          "description": "Average customer rating",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "count": {
+          "type": "integer",
+          "description": "Total number of ratings",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

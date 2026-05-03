@@ -1,0 +1,50 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.target.com/stores/v3",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Accept": "application/json"
+    },
+    "parameters": {
+      "zip": "55445",
+      "radius": 10,
+      "limit": 3
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "total": 7,
+      "stores": [
+        {
+          "store_id": "1234",
+          "name": "Target - Plymouth",
+          "phone": "763-555-0100",
+          "latitude": 45.0123,
+          "longitude": -93.4567,
+          "features": ["pharmacy", "starbucks", "drive-up", "order-pickup"],
+          "address": {
+            "street": "3900 Vinewood Ln N",
+            "city": "Plymouth",
+            "state": "MN",
+            "zip": "55441",
+            "country": "US"
+          },
+          "hours": [
+            {"day": "Monday", "open": "08:00", "close": "22:00"},
+            {"day": "Tuesday", "open": "08:00", "close": "22:00"},
+            {"day": "Wednesday", "open": "08:00", "close": "22:00"},
+            {"day": "Thursday", "open": "08:00", "close": "22:00"},
+            {"day": "Friday", "open": "08:00", "close": "22:00"},
+            {"day": "Saturday", "open": "08:00", "close": "22:00"},
+            {"day": "Sunday", "open": "08:00", "close": "22:00"}
+          ]
+        }
+      ]
+    }
+  }
+}

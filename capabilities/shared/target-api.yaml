@@ -1,0 +1,465 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Target API"
+  description: >-
+    Target partner APIs for product catalog access, inventory availability,
+    order management, and store information. Enables technology partners and
+    affiliates to integrate with Target's retail platform.
+  tags:
+    - E-Commerce
+    - Retail
+    - Products
+    - Inventory
+    - Stores
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TARGET_API_TOKEN: TARGET_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: target-api
+      baseUri: https://api.target.com
+      description: "Target retail partner API"
+      authentication:
+        type: bearer
+        token: "{{TARGET_API_TOKEN}}"
+      resources:
+        - name: products
+          path: /products/v3
+          description: "Product catalog and detail operations"
+          operations:
+            - name: list-products
+              method: GET
+              description: "Returns a list of products by TCINs or filter criteria"
+              inputParameters:
+                - name: tcins
+                  in: query
+                  type: string
+                  required: false
+                  description: "Comma-separated list of TCINs"
+                - name: category
+                  in: query
+                  type: string
+                  required: false
+                  description: "Category ID filter"
+                - name: brand
+                  in: query
+                  type: string
+                  required: false
+                  description: "Brand name filter"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum number of results"
+                - name: offset
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Pagination offset"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: search-products
+              method: GET
+              description: "Search Target product catalog by keyword and filters"
+              inputParameters:
+                - name: q
+                  in: query
+                  type: string
+                  required: true
+                  description: "Search query string"
+                - name: category
+                  in: query
+                  type: string
+                  required: false
+                  description: "Category filter"
+                - name: brand
+                  in: query
+                  type: string
+                  required: false
+                  description: "Brand filter"
+                - name: price_min
+                  in: query
+                  type: number
+                  required: false
+                  description: "Minimum price"
+                - name: price_max
+                  in: query
+                  type: number
+                  required: false
+                  description: "Maximum price"
+                - name: sort_by
+                  in: query
+                  type: string
+                  required: false
+                  description: "Sort order"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Results per page"
+                - name: offset
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Pagination offset"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: product-detail
+          path: /products/v3/{tcin}
+          description: "Individual product detail operations"
+          operations:
+            - name: get-product
+              method: GET
+              description: "Retrieves detailed product information for a given TCIN"
+              inputParameters:
+                - name: tcin
+                  in: path
+                  type: string
+                  required: true
+                  description: "Target Corporation Item Number"
+                - name: store_id
+                  in: query
+                  type: string
+                  required: false
+                  description: "Store ID for localized pricing"
+                - name: zip
+                  in: query
+                  type: string
+                  required: false
+                  description: "ZIP code for localized pricing"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: product-fulfillment
+          path: /products/v3/{tcin}/fulfillment
+          description: "Product fulfillment and availability"
+          operations:
+            - name: get-product-fulfillment
+              method: GET
+              description: "Returns fulfillment availability for ship-to-home, pickup, drive-up"
+              inputParameters:
+                - name: tcin
+                  in: path
+                  type: string
+                  required: true
+                  description: "Target Corporation Item Number"
+                - name: store_id
+                  in: query
+                  type: string
+                  required: false
+                  description: "Store ID for in-store availability"
+                - name: zip
+                  in: query
+                  type: string
+                  required: false
+                  description: "ZIP code for delivery availability"
+                - name: latitude
+                  in: query
+                  type: number
+                  required: false
+                  description: "Latitude for nearby store lookup"
+                - name: longitude
+                  in: query
+                  type: number
+                  required: false
+                  description: "Longitude for nearby store lookup"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: stores
+          path: /stores/v3
+          description: "Store locator and store information"
+          operations:
+            - name: list-stores
+              method: GET
+              description: "Returns list of Target stores filtered by location"
+              inputParameters:
+                - name: zip
+                  in: query
+                  type: string
+                  required: false
+                  description: "ZIP code to search near"
+                - name: latitude
+                  in: query
+                  type: number
+                  required: false
+                  description: "Latitude for geographic search"
+                - name: longitude
+                  in: query
+                  type: number
+                  required: false
+                  description: "Longitude for geographic search"
+                - name: radius
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Search radius in miles"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum stores to return"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: store-detail
+          path: /stores/v3/{store_id}
+          description: "Individual store detail"
+          operations:
+            - name: get-store
+              method: GET
+              description: "Returns detailed information about a specific Target store"
+              inputParameters:
+                - name: store_id
+                  in: path
+                  type: string
+                  required: true
+                  description: "Target store ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: orders
+          path: /orders/v1
+          description: "Order management for partners"
+          operations:
+            - name: list-orders
+              method: GET
+              description: "Returns orders for partner fulfillment or reporting"
+              inputParameters:
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by order status"
+                - name: from_date
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start date filter (ISO 8601)"
+                - name: to_date
+                  in: query
+                  type: string
+                  required: false
+                  description: "End date filter (ISO 8601)"
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Maximum orders to return"
+                - name: offset
+                  in: query
+                  type: integer
+                  required: false
+                  description: "Pagination offset"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: order-detail
+          path: /orders/v1/{order_id}
+          description: "Individual order details"
+          operations:
+            - name: get-order
+              method: GET
+              description: "Returns full details of a specific order"
+              inputParameters:
+                - name: order_id
+                  in: path
+                  type: string
+                  required: true
+                  description: "Target order ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: target-api-rest
+      resources:
+        - path: /v1/products
+          name: products
+          description: "Product catalog operations"
+          operations:
+            - method: GET
+              name: list-products
+              description: "List products"
+              call: "target-api.list-products"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: search-products
+              description: "Search products"
+              call: "target-api.search-products"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/products/{tcin}
+          name: product-detail
+          description: "Product detail by TCIN"
+          operations:
+            - method: GET
+              name: get-product
+              description: "Get product details"
+              call: "target-api.get-product"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/products/{tcin}/fulfillment
+          name: product-fulfillment
+          description: "Product fulfillment availability"
+          operations:
+            - method: GET
+              name: get-product-fulfillment
+              description: "Get product fulfillment"
+              call: "target-api.get-product-fulfillment"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/stores
+          name: stores
+          description: "Store locator"
+          operations:
+            - method: GET
+              name: list-stores
+              description: "List stores by location"
+              call: "target-api.list-stores"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/stores/{store_id}
+          name: store-detail
+          description: "Store detail"
+          operations:
+            - method: GET
+              name: get-store
+              description: "Get store details"
+              call: "target-api.get-store"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/orders
+          name: orders
+          description: "Order management"
+          operations:
+            - method: GET
+              name: list-orders
+              description: "List orders"
+              call: "target-api.list-orders"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/orders/{order_id}
+          name: order-detail
+          description: "Order detail"
+          operations:
+            - method: GET
+              name: get-order
+              description: "Get order details"
+              call: "target-api.get-order"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: target-api-mcp
+      transport: http
+      tools:
+        - name: list-products
+          description: "List Target products by TCINs, category, or brand"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.list-products"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: search-products
+          description: "Search Target product catalog by keyword"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.search-products"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-product
+          description: "Get detailed product information by TCIN"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.get-product"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-product-fulfillment
+          description: "Get product fulfillment availability (ship, pickup, drive-up)"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.get-product-fulfillment"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-stores
+          description: "Find Target stores near a location"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.list-stores"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-store
+          description: "Get Target store details including hours and features"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "target-api.get-store"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-orders
+          description: "List partner orders filtered by status and date range"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "target-api.list-orders"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-order
+          description: "Get full details of a specific Target order"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "target-api.get-order"
+          outputParameters:
+            - type: object
+              mapping: "$."

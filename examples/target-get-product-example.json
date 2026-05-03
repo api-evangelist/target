@@ -1,0 +1,47 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.target.com/products/v3/13374218",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Accept": "application/json"
+    },
+    "parameters": {
+      "store_id": "1234",
+      "zip": "55445"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "tcin": "13374218",
+      "title": "Apple AirPods Pro (2nd Generation) with MagSafe Case",
+      "description": "Experience transformative audio with AirPods Pro featuring Active Noise Cancellation, Transparency mode, and Adaptive Audio. Includes MagSafe Charging Case.",
+      "brand": "Apple",
+      "category": "Electronics/Headphones/Wireless",
+      "upc": "194253378587",
+      "dpci": "058-04-0010",
+      "images": [
+        {
+          "url": "https://target.scene7.com/is/image/Target/13374218",
+          "type": "primary",
+          "width": 640,
+          "height": 640
+        }
+      ],
+      "price": {
+        "current_retail": 249.99,
+        "regular_retail": 249.99,
+        "is_on_sale": false,
+        "currency": "USD"
+      },
+      "rating": {
+        "average": 4.8,
+        "count": 12453
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.target.com/products/v3/13374218/fulfillment",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Accept": "application/json"
+    },
+    "parameters": {
+      "store_id": "1234",
+      "zip": "55445"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "tcin": "13374218",
+      "ship_to_home": {
+        "available": true,
+        "quantity": 150,
+        "estimated_date": "2026-05-05"
+      },
+      "in_store_pickup": {
+        "available": true,
+        "quantity": 8,
+        "estimated_date": "2026-05-03"
+      },
+      "drive_up": {
+        "available": true,
+        "quantity": 8,
+        "estimated_date": "2026-05-03"
+      },
+      "same_day_delivery": {
+        "available": true,
+        "quantity": 8,
+        "estimated_date": "2026-05-03"
+      }
+    }
+  }
+}

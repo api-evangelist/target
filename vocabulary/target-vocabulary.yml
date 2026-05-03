@@ -1,0 +1,76 @@
+name: Target Vocabulary
+description: Domain vocabulary and taxonomy for Target retail APIs covering products, stores, orders, and fulfillment.
+url: https://developer.target.com/
+version: "1.0"
+created: "2026-05-03"
+modified: "2026-05-03"
+tags:
+  - E-Commerce
+  - Retail
+  - Products
+  - Inventory
+terms:
+  - term: TCIN
+    definition: "Target Corporation Item Number. The primary unique identifier for a product in Target's catalog. An 8-digit numeric code."
+    type: identifier
+    domain: Products
+  - term: DPCI
+    definition: "Department-Class-Item number. A Target-specific product classification code in the format DDD-CC-IIII, encoding the product's department, class, and item number."
+    type: identifier
+    domain: Products
+  - term: UPC
+    definition: "Universal Product Code. Standard 12-13 digit barcode identifier used across retail."
+    type: identifier
+    domain: Products
+  - term: Redsky
+    definition: "Target's internal aggregation API platform that converts GraphQL queries into client-managed REST APIs. Powers product, price, and promotion data for Target.com."
+    type: platform
+    domain: Technology
+  - term: Drive Up
+    definition: "Target's curbside pickup fulfillment option. Customers park in designated spots and a team member brings the order to their car."
+    type: fulfillment-method
+    domain: Fulfillment
+  - term: Order Pickup
+    definition: "Target's in-store pickup fulfillment option. Customers retrieve orders placed online at a designated pickup area inside the store."
+    type: fulfillment-method
+    domain: Fulfillment
+  - term: Ship to Home
+    definition: "Standard e-commerce delivery fulfillment. Orders are shipped from a Target distribution center or store directly to the customer's address."
+    type: fulfillment-method
+    domain: Fulfillment
+  - term: Same Day Delivery
+    definition: "Express delivery fulfillment powered by Shipt. Orders placed by a cutoff time are delivered to the customer's home the same day."
+    type: fulfillment-method
+    domain: Fulfillment
+  - term: Target Circle
+    definition: "Target's loyalty program offering personalized deals, a 1% earnings reward on purchases, and community giving options."
+    type: loyalty-program
+    domain: Commerce
+  - term: Target Plus
+    definition: "Target's curated third-party marketplace where select external sellers can offer products on Target.com alongside Target's own inventory."
+    type: marketplace
+    domain: Commerce
+  - term: Store ID
+    definition: "Unique numeric identifier for a Target retail store location, used across APIs for filtering inventory and fulfillment availability."
+    type: identifier
+    domain: Stores
+  - term: Fulfillment Option
+    definition: "A method by which a customer can receive a product. Target offers Ship to Home, In-Store Pickup, Drive Up, and Same Day Delivery."
+    type: concept
+    domain: Fulfillment
+  - term: Partner API
+    definition: "APIs provided by Target to authorized technology partners for integrating with Target's product catalog, inventory, and retail operations."
+    type: concept
+    domain: Technology
+  - term: Inventory Availability
+    definition: "Real-time or near-real-time data indicating whether a product is in stock at a specific store or available online."
+    type: concept
+    domain: Inventory
+  - term: Price
+    definition: "The monetary value assigned to a product. Target distinguishes between regular retail price, current retail price (may be on sale), and sale price."
+    type: concept
+    domain: Commerce
+  - term: Category
+    definition: "Hierarchical product classification (e.g., Electronics > Headphones > Wireless) used for browse navigation and filtering."
+    type: taxonomy
+    domain: Products
