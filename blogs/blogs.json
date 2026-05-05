@@ -1,0 +1,13 @@
+{
+  "repo": "target",
+  "feeds": [
+    {
+      "source": "https://tech.target.com",
+      "feed_url": "https://tech.target.com/rss/feed.xml",
+      "saved": 10,
+      "title": "Target Tech Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:37:21Z"
+}
