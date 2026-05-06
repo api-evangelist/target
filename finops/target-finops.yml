@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,149 +9,53 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: target
 providerId: target
-publisherName: target
-serviceCategory: API
+publisherName: Target Corporation
+serviceCategory: Retail
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - E-Commerce
   - Retail
-  - Products
-  - Inventory
-  - Fortune 100
-  - Stores
-  - Orders
+  - Ecommerce
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the target API surface. Provides a FOCUS-aligned mapping
-  for cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: FinOps placeholder for Target Corporation. No public developer billing surface;
+  partner-program billing is governed by program-specific terms (vendor / Target+ / Roundel /
+  Shipt) and falls under the partner's own AP reconciliation against Target invoices.
+sources:
+  - https://corporate.target.com/
+notes: No public billing telemetry for partner / developer programs. Meter list collapsed to
+  custom engagement pending program-specific confirmation.
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Custom / Contact Sales
+  billingFrequency: Per-Invoice
   billingCurrency: USD
   chargeCategories:
     - Usage
-    - Purchase
-    - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
-  ServiceName: target
-  ServiceCategory: Developer Tools / API
-  ProviderName: target
-  PublisherName: target
-  InvoiceIssuerName: target
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Target
+  ServiceCategory: Retail
+  ProviderName: Target
+  PublisherName: Target Corporation
+  InvoiceIssuerName: Target Corporation
   BillingCurrency: USD
-  ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: custom_engagement
+    unit: varies
     aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
-    dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Target API
-    baseURL: https://api.target.com
-    tags:
-      - E-Commerce
-      - Inventory
-      - Orders
-      - Products
-      - Retail
-      - Stores
-    serviceName: Target API
-    serviceCategory: API
-  - name: Target Redsky API
-    baseURL: https://redsky.target.com
-    tags:
-      - E-Commerce
-      - GraphQL
-      - Products
-      - Retail
-    serviceName: Target Redsky API
-    serviceCategory: API
-  - name: Target Partner API
-    baseURL: https://api.target.com
-    tags:
-      - E-Commerce
-      - Inventory
-      - Partners
-      - Retail
-      - Suppliers
-    serviceName: Target Partner API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+principles:
+  - name: Visibility
+    description: Visibility is delivered through program-specific partner portals (vendor portal,
+      Target+, Roundel) rather than a unified public usage API.
+  - name: Allocation
+    description: Allocation is handled in the partner's own AP system against the program's invoice
+      line items.
+  - name: Optimization
+    description: Optimization is addressed in commercial review with the program team (assortment,
+      media spend, marketplace fees).
+  - name: Accountability
+    description: Accountability sits with the partner team that owns the relevant Target program
+      relationship.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
