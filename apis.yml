@@ -82,7 +82,7 @@ common:
     url: https://github.com/target
   - type: Open Source
     url: https://tech.target.com/open-source
-  - type: Status
+  - type: StatusPage
     url: https://status.target.com
   - type: JSONSchema
     url: json-schema/target-product-schema.json
