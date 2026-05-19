@@ -1,0 +1,145 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Target API — Stores
+  description: 'Target API — Stores. 2 operations. Lead operation: List Stores. Self-contained Naftiko capability covering
+    one Target business surface.'
+  tags:
+  - Target
+  - Stores
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TARGET_API_KEY: TARGET_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: target-stores
+    baseUri: https://api.target.com
+    description: Target API — Stores business capability. Self-contained, no shared references.
+    resources:
+    - name: stores-v3
+      path: /stores/v3
+      operations:
+      - name: liststores
+        method: GET
+        description: List Stores
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: zip
+          in: query
+          type: string
+          description: ZIP code to search near
+        - name: latitude
+          in: query
+          type: number
+          description: Latitude for geographic search
+        - name: longitude
+          in: query
+          type: number
+          description: Longitude for geographic search
+        - name: radius
+          in: query
+          type: integer
+          description: Search radius in miles
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of stores to return
+    - name: stores-v3-store_id
+      path: /stores/v3/{store_id}
+      operations:
+      - name: getstore
+        method: GET
+        description: Get Store Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: store_id
+          in: path
+          type: string
+          description: Target store ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TARGET_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: target-stores-rest
+    port: 8080
+    description: REST adapter for Target API — Stores. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/stores/v3
+      name: stores-v3
+      description: REST surface for stores-v3.
+      operations:
+      - method: GET
+        name: liststores
+        description: List Stores
+        call: target-stores.liststores
+        with:
+          zip: rest.zip
+          latitude: rest.latitude
+          longitude: rest.longitude
+          radius: rest.radius
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/stores/v3/{store-id}
+      name: stores-v3-store-id
+      description: REST surface for stores-v3-store_id.
+      operations:
+      - method: GET
+        name: getstore
+        description: Get Store Details
+        call: target-stores.getstore
+        with:
+          store_id: rest.store_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: target-stores-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Target API — Stores. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-stores
+      description: List Stores
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: target-stores.liststores
+      with:
+        zip: tools.zip
+        latitude: tools.latitude
+        longitude: tools.longitude
+        radius: tools.radius
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-store-details
+      description: Get Store Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: target-stores.getstore
+      with:
+        store_id: tools.store_id
+      outputParameters:
+      - type: object
+        mapping: $.

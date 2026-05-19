@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Target API — Status
+  description: 'Target API — Status. 1 operations. Lead operation: Get API Status. Self-contained Naftiko capability covering
+    one Target business surface.'
+  tags:
+  - Target
+  - Status
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TARGET_API_KEY: TARGET_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: target-status
+    baseUri: https://api.target.com
+    description: Target API — Status business capability. Self-contained, no shared references.
+    resources:
+    - name: status
+      path: /status
+      operations:
+      - name: getapistatus
+        method: GET
+        description: Get API Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.TARGET_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: target-status-rest
+    port: 8080
+    description: REST adapter for Target API — Status. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/status
+      name: status
+      description: REST surface for status.
+      operations:
+      - method: GET
+        name: getapistatus
+        description: Get API Status
+        call: target-status.getapistatus
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: target-status-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Target API — Status. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-api-status
+      description: Get API Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: target-status.getapistatus
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Target API — Search
+  description: 'Target API — Search. 1 operations. Lead operation: Search Products. Self-contained Naftiko capability covering
+    one Target business surface.'
+  tags:
+  - Target
+  - Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TARGET_API_KEY: TARGET_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: target-search
+    baseUri: https://api.target.com
+    description: Target API — Search business capability. Self-contained, no shared references.
+    resources:
+    - name: products-v3-search
+      path: /products/v3/search
+      operations:
+      - name: searchproducts
+        method: GET
+        description: Search Products
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: q
+          in: query
+          type: string
+          description: Search query string
+          required: true
+        - name: category
+          in: query
+          type: string
+          description: Category filter
+        - name: brand
+          in: query
+          type: string
+          description: Brand filter
+        - name: price_min
+          in: query
+          type: number
+          description: Minimum price filter
+        - name: price_max
+          in: query
+          type: number
+          description: Maximum price filter
+        - name: sort_by
+          in: query
+          type: string
+          description: Sort order
+        - name: limit
+          in: query
+          type: integer
+          description: Number of results per page
+        - name: offset
+          in: query
+          type: integer
+          description: Pagination offset
+    authentication:
+      type: bearer
+      token: '{{env.TARGET_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: target-search-rest
+    port: 8080
+    description: REST adapter for Target API — Search. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/products/v3/search
+      name: products-v3-search
+      description: REST surface for products-v3-search.
+      operations:
+      - method: GET
+        name: searchproducts
+        description: Search Products
+        call: target-search.searchproducts
+        with:
+          q: rest.q
+          category: rest.category
+          brand: rest.brand
+          price_min: rest.price_min
+          price_max: rest.price_max
+          sort_by: rest.sort_by
+          limit: rest.limit
+          offset: rest.offset
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: target-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Target API — Search. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: search-products
+      description: Search Products
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: target-search.searchproducts
+      with:
+        q: tools.q
+        category: tools.category
+        brand: tools.brand
+        price_min: tools.price_min
+        price_max: tools.price_max
+        sort_by: tools.sort_by
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.
