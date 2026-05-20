@@ -3,12 +3,11 @@
   "feeds": [
     {
       "source": "https://tech.target.com",
-      "feed_url": "",
-      "title": "",
-      "saved": 0,
-      "error": "no_feed"
+      "feed_url": "https://tech.target.com/rss/feed.xml",
+      "title": "Target Tech Blog",
+      "saved": 44
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-05-09T20:17:51Z"
+  "post_count": 54,
+  "fetched": "2026-05-17T20:48:52Z"
 }
