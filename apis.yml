@@ -98,6 +98,8 @@ common:
     url: json-ld/target-context.jsonld
   - type: Vocabulary
     url: vocabulary/target-vocabulary.yml
+  - type: LLMsTxt
+    url: https://developer.target.com/llms.txt
 tags:
   - E-Commerce
   - Retail
