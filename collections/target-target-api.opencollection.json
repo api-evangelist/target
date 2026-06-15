@@ -1,0 +1,383 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Target API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get API Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/status"
+          },
+          "docs": "Returns the current operational status of the Target API platform."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Product Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3/:tcin",
+            "params": [
+              {
+                "name": "tcin",
+                "value": "",
+                "type": "path",
+                "description": "Target Corporation Item Number (TCIN)"
+              },
+              {
+                "name": "store_id",
+                "value": "",
+                "type": "query",
+                "description": "Store ID for localized pricing and availability"
+              },
+              {
+                "name": "zip",
+                "value": "",
+                "type": "query",
+                "description": "ZIP code for localized pricing"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to return"
+              }
+            ]
+          },
+          "docs": "Retrieves detailed product information for a given TCIN (Target Corporation Item Number) including title, description, images, pricing, and attributes."
+        },
+        {
+          "info": {
+            "name": "List Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3",
+            "params": [
+              {
+                "name": "tcins",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of TCINs"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category ID to filter products"
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "Brand name to filter products"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              }
+            ]
+          },
+          "docs": "Returns a list of products by TCINs or other filter criteria."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Inventory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Product Fulfillment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3/:tcin/fulfillment",
+            "params": [
+              {
+                "name": "tcin",
+                "value": "",
+                "type": "path",
+                "description": "Target Corporation Item Number"
+              },
+              {
+                "name": "store_id",
+                "value": "",
+                "type": "query",
+                "description": "Store ID for in-store availability"
+              },
+              {
+                "name": "zip",
+                "value": "",
+                "type": "query",
+                "description": "ZIP code for ship-to-home availability"
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "Latitude for nearby store lookup"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "Longitude for nearby store lookup"
+              }
+            ]
+          },
+          "docs": "Returns fulfillment and availability information for a product at a specific store or for online delivery, including ship-to-home, in-store pickup, and drive-up options."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stores",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Stores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/stores/v3",
+            "params": [
+              {
+                "name": "zip",
+                "value": "",
+                "type": "query",
+                "description": "ZIP code to search near"
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "Latitude for geographic search"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "Longitude for geographic search"
+              },
+              {
+                "name": "radius",
+                "value": "",
+                "type": "query",
+                "description": "Search radius in miles"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of stores to return"
+              }
+            ]
+          },
+          "docs": "Returns a list of Target stores optionally filtered by location, ZIP code, or geographic coordinates."
+        },
+        {
+          "info": {
+            "name": "Get Store Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/stores/v3/:store_id",
+            "params": [
+              {
+                "name": "store_id",
+                "value": "",
+                "type": "path",
+                "description": "Target store ID"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific Target store."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query string"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category filter"
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "Brand filter"
+              },
+              {
+                "name": "price_min",
+                "value": "",
+                "type": "query",
+                "description": "Minimum price filter"
+              },
+              {
+                "name": "price_max",
+                "value": "",
+                "type": "query",
+                "description": "Maximum price filter"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              }
+            ]
+          },
+          "docs": "Search Target's product catalog by keyword, category, brand, or other criteria. Returns matching products with relevance scoring."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/orders/v1",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by order status"
+              },
+              {
+                "name": "from_date",
+                "value": "",
+                "type": "query",
+                "description": "Start date filter (ISO 8601)"
+              },
+              {
+                "name": "to_date",
+                "value": "",
+                "type": "query",
+                "description": "End date filter (ISO 8601)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum orders to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              }
+            ]
+          },
+          "docs": "Returns orders for partner fulfillment or reporting purposes."
+        },
+        {
+          "info": {
+            "name": "Get Order Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/orders/v1/:order_id",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Target order ID"
+              }
+            ]
+          },
+          "docs": "Returns full details of a specific order including line items and status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
