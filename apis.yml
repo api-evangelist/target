@@ -16,7 +16,7 @@ apis:
   - Products
   - Retail
   - Stores
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.target.com
   humanURL: https://developer.target.com/
   properties:
@@ -38,7 +38,7 @@ apis:
   - GraphQL
   - Products
   - Retail
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://redsky.target.com
   humanURL: https://tech.target.com/blog/empowering-clients-api
   properties:
@@ -58,7 +58,7 @@ apis:
   - Partners
   - Retail
   - Suppliers
-  image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   baseURL: https://api.target.com
   humanURL: https://developer.target.com/
   properties:
