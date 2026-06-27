@@ -72,11 +72,11 @@ common:
   url: https://www.linkedin.com/company/target
 - type: Website
   url: https://www.target.com
-- type: Developer Portal
+- type: DeveloperPortal
   url: https://developer.target.com/
 - type: Blog
   url: https://tech.target.com
-- type: GitHub Org
+- type: GitHubOrg
   url: https://github.com/target
 - type: Open Source
   url: https://tech.target.com/open-source
@@ -92,17 +92,17 @@ common:
   url: json-ld/target-context.jsonld
 - type: Vocabulary
   url: vocabulary/target-vocabulary.yml
-- type: LLMsTxt
+- type: LlmsText
   url: https://developer.target.com/llms.txt
 tags:
   - Fortune 100
-- E-Commerce
-- Retail
-- Products
-- Inventory
-- Fortune 100
-- Stores
-- Orders
+  - E-Commerce
+  - Retail
+  - Products
+  - Inventory
+  - Fortune 100
+  - Stores
+  - Orders
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
