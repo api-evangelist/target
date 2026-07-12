@@ -68,6 +68,12 @@ apis:
     Target's partner API program enables technology vendors, affiliates, and supply chain partners to integrate with
     Target's retail operations including product catalog, inventory management, order fulfillment, and store data.
 common:
+- type: VulnerabilityDisclosure
+  url: security/target-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/target-domain-security.yml
+- type: Authentication
+  url: authentication/target-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/target
 - type: Website
