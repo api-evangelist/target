@@ -1,0 +1,137 @@
+openapi: 3.1.0
+info:
+  title: Target Inventory API
+  description: Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.
+  version: '1.0'
+  contact:
+    name: Target Developer Support
+    url: https://developer.target.com/
+  termsOfService: https://developer.target.com/terms
+servers:
+- url: https://api.target.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Inventory
+  description: Store and online inventory availability
+paths:
+  /products/v3/{tcin}/fulfillment:
+    get:
+      operationId: getProductFulfillment
+      summary: Get Product Fulfillment
+      description: Returns fulfillment and availability information for a product at a specific store or for online delivery, including ship-to-home, in-store pickup, and drive-up options.
+      tags:
+      - Inventory
+      parameters:
+      - name: tcin
+        in: path
+        required: true
+        description: Target Corporation Item Number
+        schema:
+          type: string
+      - name: store_id
+        in: query
+        required: false
+        description: Store ID for in-store availability
+        schema:
+          type: string
+      - name: zip
+        in: query
+        required: false
+        description: ZIP code for ship-to-home availability
+        schema:
+          type: string
+      - name: latitude
+        in: query
+        required: false
+        description: Latitude for nearby store lookup
+        schema:
+          type: number
+      - name: longitude
+        in: query
+        required: false
+        description: Longitude for nearby store lookup
+        schema:
+          type: number
+      responses:
+        '200':
+          description: Fulfillment availability
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductFulfillment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    FulfillmentOption:
+      type: object
+      properties:
+        available:
+          type: boolean
+          description: Whether this fulfillment option is available
+        quantity:
+          type: integer
+          description: Available quantity
+        estimated_date:
+          type: string
+          format: date
+          description: Estimated availability or delivery date
+    ProductFulfillment:
+      type: object
+      properties:
+        tcin:
+          type: string
+          description: Target Corporation Item Number
+        ship_to_home:
+          $ref: '#/components/schemas/FulfillmentOption'
+        in_store_pickup:
+          $ref: '#/components/schemas/FulfillmentOption'
+        drive_up:
+          $ref: '#/components/schemas/FulfillmentOption'
+        same_day_delivery:
+          $ref: '#/components/schemas/FulfillmentOption'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
+  responses:
+    NotFound:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Target Developer Portal
+  url: https://developer.target.com/

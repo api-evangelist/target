@@ -1,0 +1,62 @@
+openapi: 3.1.0
+info:
+  title: Target Inventory Status API
+  description: Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.
+  version: '1.0'
+  contact:
+    name: Target Developer Support
+    url: https://developer.target.com/
+  termsOfService: https://developer.target.com/terms
+servers:
+- url: https://api.target.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Status
+  description: API health and status
+paths:
+  /status:
+    get:
+      operationId: getApiStatus
+      summary: Get API Status
+      description: Returns the current operational status of the Target API platform.
+      tags:
+      - Status
+      security: []
+      responses:
+        '200':
+          description: API is operational
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiStatus'
+        '503':
+          description: Service unavailable
+components:
+  schemas:
+    ApiStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Current API status
+          enum:
+          - operational
+          - degraded
+          - outage
+        version:
+          type: string
+          description: API version
+        timestamp:
+          type: string
+          format: date-time
+          description: Status timestamp
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Target Developer Portal
+  url: https://developer.target.com/

@@ -1,0 +1,205 @@
+openapi: 3.1.0
+info:
+  title: Target Inventory Orders API
+  description: Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.
+  version: '1.0'
+  contact:
+    name: Target Developer Support
+    url: https://developer.target.com/
+  termsOfService: https://developer.target.com/terms
+servers:
+- url: https://api.target.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Orders
+  description: Order management for partners
+paths:
+  /orders/v1:
+    get:
+      operationId: listOrders
+      summary: List Orders
+      description: Returns orders for partner fulfillment or reporting purposes.
+      tags:
+      - Orders
+      parameters:
+      - name: status
+        in: query
+        required: false
+        description: Filter by order status
+        schema:
+          type: string
+          enum:
+          - pending
+          - processing
+          - shipped
+          - delivered
+          - cancelled
+      - name: from_date
+        in: query
+        required: false
+        description: Start date filter (ISO 8601)
+        schema:
+          type: string
+          format: date
+      - name: to_date
+        in: query
+        required: false
+        description: End date filter (ISO 8601)
+        schema:
+          type: string
+          format: date
+      - name: limit
+        in: query
+        required: false
+        description: Maximum orders to return
+        schema:
+          type: integer
+          default: 20
+      - name: offset
+        in: query
+        required: false
+        description: Pagination offset
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /orders/v1/{order_id}:
+    get:
+      operationId: getOrder
+      summary: Get Order Details
+      description: Returns full details of a specific order including line items and status.
+      tags:
+      - Orders
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Target order ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    OrderList:
+      type: object
+      properties:
+        orders:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
+    OrderLineItem:
+      type: object
+      properties:
+        tcin:
+          type: string
+          description: Target Corporation Item Number
+        title:
+          type: string
+          description: Product title
+        quantity:
+          type: integer
+        unit_price:
+          type: number
+        total_price:
+          type: number
+        status:
+          type: string
+    Order:
+      type: object
+      properties:
+        order_id:
+          type: string
+          description: Target order ID
+        status:
+          type: string
+          enum:
+          - pending
+          - processing
+          - shipped
+          - delivered
+          - cancelled
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        line_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineItem'
+        total_amount:
+          type: number
+          description: Total order amount
+        currency:
+          type: string
+          default: USD
+  responses:
+    NotFound:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Target Developer Portal
+  url: https://developer.target.com/

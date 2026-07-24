@@ -1,0 +1,235 @@
+openapi: 3.1.0
+info:
+  title: Target Inventory Search API
+  description: Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.
+  version: '1.0'
+  contact:
+    name: Target Developer Support
+    url: https://developer.target.com/
+  termsOfService: https://developer.target.com/terms
+servers:
+- url: https://api.target.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Search
+  description: Product search and discovery
+paths:
+  /products/v3/search:
+    get:
+      operationId: searchProducts
+      summary: Search Products
+      description: Search Target's product catalog by keyword, category, brand, or other criteria. Returns matching products with relevance scoring.
+      tags:
+      - Search
+      parameters:
+      - name: q
+        in: query
+        required: true
+        description: Search query string
+        schema:
+          type: string
+      - name: category
+        in: query
+        required: false
+        description: Category filter
+        schema:
+          type: string
+      - name: brand
+        in: query
+        required: false
+        description: Brand filter
+        schema:
+          type: string
+      - name: price_min
+        in: query
+        required: false
+        description: Minimum price filter
+        schema:
+          type: number
+      - name: price_max
+        in: query
+        required: false
+        description: Maximum price filter
+        schema:
+          type: number
+      - name: sort_by
+        in: query
+        required: false
+        description: Sort order
+        schema:
+          type: string
+          enum:
+          - relevance
+          - price_asc
+          - price_desc
+          - rating
+          - newest
+      - name: limit
+        in: query
+        required: false
+        description: Number of results per page
+        schema:
+          type: integer
+          default: 20
+          maximum: 100
+      - name: offset
+        in: query
+        required: false
+        description: Pagination offset
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    Price:
+      type: object
+      properties:
+        current_retail:
+          type: number
+          description: Current retail price
+        regular_retail:
+          type: number
+          description: Regular (non-sale) retail price
+        sale_price:
+          type: number
+          description: Sale price if applicable
+        is_on_sale:
+          type: boolean
+          description: Whether the product is currently on sale
+        currency:
+          type: string
+          default: USD
+    ProductDetail:
+      type: object
+      properties:
+        tcin:
+          type: string
+          description: Target Corporation Item Number
+        title:
+          type: string
+          description: Product title
+        description:
+          type: string
+          description: Product description
+        brand:
+          type: string
+          description: Brand name
+        category:
+          type: string
+          description: Product category path
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductImage'
+        price:
+          $ref: '#/components/schemas/Price'
+        rating:
+          $ref: '#/components/schemas/Rating'
+        dpci:
+          type: string
+          description: Department-class-item number
+        upc:
+          type: string
+          description: Universal Product Code
+    ProductImage:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Image URL
+        type:
+          type: string
+          description: Image type (primary, alternate, lifestyle)
+        width:
+          type: integer
+        height:
+          type: integer
+    SearchFacet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Facet name (brand, category, price, etc.)
+        values:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              count:
+                type: integer
+    Rating:
+      type: object
+      properties:
+        average:
+          type: number
+          description: Average customer rating (0-5)
+        count:
+          type: integer
+          description: Total number of ratings
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
+    SearchResults:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetail'
+        total:
+          type: integer
+          description: Total matching results
+        limit:
+          type: integer
+        offset:
+          type: integer
+        facets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchFacet'
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Target Developer Portal
+  url: https://developer.target.com/
