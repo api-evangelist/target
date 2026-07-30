@@ -1,4 +1,18 @@
 aid: target
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/target.png
 url: https://raw.githubusercontent.com/api-evangelist/target/refs/heads/main/apis.yml
 created: '2024-01-01'
 modified: '2026-05-19'
@@ -7,30 +21,6 @@ description: >-
   merchandise and food through more than 1,900 stores and digital channels. Target's technology platform powers partner
   integrations, internal services, and open-source tooling across their retail operations.
 apis:
-- aid: target:target-api
-  name: Target API
-  tags:
-  - E-Commerce
-  - Inventory
-  - Orders
-  - Products
-  - Retail
-  - Stores
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.target.com
-  humanURL: https://developer.target.com/
-  properties:
-  - url: https://developer.target.com/
-    type: Documentation
-  - url: openapi/target-target-api-openapi.yml
-    type: OpenAPI
-  - url: rules/target-spectral-rules.yml
-    type: SpectralRules
-  description: >-
-    Target provides partner APIs for product catalog access, inventory availability, order management, and store
-    information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The
-    Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price,
-    promotion, and fulfillment data.
 - aid: target:target-redsky-api
   name: Target Redsky API
   tags:
@@ -47,9 +37,9 @@ apis:
   - url: graphql/target-graphql.md
     type: GraphQL
   description: >-
-    Redsky is Target's internal aggregation API platform that converts GraphQL queries into client-managed REST APIs.
-    It serves product data, pricing, promotions, and fulfillment information for Target.com and mobile applications.
-    The platform manages 200+ unique APIs across 30 clients backed by 50+ integrations.
+    Redsky is Target's internal aggregation API platform that converts GraphQL queries into client-managed
+    REST APIs. It serves product data, pricing, promotions, and fulfillment information for Target.com
+    and mobile applications. The platform manages 200+ unique APIs across 30 clients backed by 50+ integrations.
 - aid: target:target-partner-api
   name: Target Partner API
   tags:
@@ -65,8 +55,93 @@ apis:
   - url: https://developer.target.com/
     type: Documentation
   description: >-
-    Target's partner API program enables technology vendors, affiliates, and supply chain partners to integrate with
-    Target's retail operations including product catalog, inventory management, order fulfillment, and store data.
+    Target's partner API program enables technology vendors, affiliates, and supply chain partners to
+    integrate with Target's retail operations including product catalog, inventory management, order fulfillment,
+    and store data.
+- aid: target:target-inventory-api
+  name: target Inventory API
+  description: Store and online inventory availability
+  humanURL: https://developer.target.com/
+  baseURL: https://api.target.com
+  tags:
+  - Inventory
+  properties:
+  - type: OpenAPI
+    url: openapi/target-inventory-api-openapi.yml
+  - type: Documentation
+    url: https://developer.target.com/
+  - type: SpectralRules
+    url: rules/target-spectral-rules.yml
+- aid: target:target-orders-api
+  name: target Orders API
+  description: Order management for partners
+  humanURL: https://developer.target.com/
+  baseURL: https://api.target.com
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/target-orders-api-openapi.yml
+  - type: Documentation
+    url: https://developer.target.com/
+  - type: SpectralRules
+    url: rules/target-spectral-rules.yml
+- aid: target:target-products-api
+  name: target Products API
+  description: Product catalog and detail operations
+  humanURL: https://developer.target.com/
+  baseURL: https://api.target.com
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/target-products-api-openapi.yml
+  - type: Documentation
+    url: https://developer.target.com/
+  - type: SpectralRules
+    url: rules/target-spectral-rules.yml
+- aid: target:target-search-api
+  name: target Search API
+  description: Product search and discovery
+  humanURL: https://developer.target.com/
+  baseURL: https://api.target.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/target-search-api-openapi.yml
+  - type: Documentation
+    url: https://developer.target.com/
+  - type: SpectralRules
+    url: rules/target-spectral-rules.yml
+- aid: target:target-status-api
+  name: target Status API
+  description: API health and status
+  humanURL: https://developer.target.com/
+  baseURL: https://api.target.com
+  tags:
+  - Status
+  properties:
+  - type: OpenAPI
+    url: openapi/target-status-api-openapi.yml
+  - type: Documentation
+    url: https://developer.target.com/
+  - type: SpectralRules
+    url: rules/target-spectral-rules.yml
+- aid: target:target-stores-api
+  name: target Stores API
+  description: Store locator and store information
+  humanURL: https://developer.target.com/
+  baseURL: https://api.target.com
+  tags:
+  - Stores
+  properties:
+  - type: OpenAPI
+    url: openapi/target-stores-api-openapi.yml
+  - type: Documentation
+    url: https://developer.target.com/
+  - type: SpectralRules
+    url: rules/target-spectral-rules.yml
 common:
 - type: AgenticAccess
   url: agentic-access/target-agentic-access.yml
