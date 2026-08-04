@@ -1,0 +1,24 @@
+{
+  "provider": "target",
+  "sources": [
+    "target-inventory-api-openapi.yml",
+    "target-orders-api-openapi.yml",
+    "target-products-api-openapi.yml",
+    "target-search-api-openapi.yml",
+    "target-status-api-openapi.yml",
+    "target-stores-api-openapi.yml"
+  ],
+  "outputs": [
+    "target-inventory-api-openapi.yml",
+    "target-orders-api-openapi.yml",
+    "target-products-api-openapi.yml",
+    "target-search-api-openapi.yml",
+    "target-status-api-openapi.yml",
+    "target-stores-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
