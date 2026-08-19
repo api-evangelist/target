@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Target Inventory Status API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get API Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/status"
+          },
+          "docs": "Returns the current operational status of the Target API platform."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

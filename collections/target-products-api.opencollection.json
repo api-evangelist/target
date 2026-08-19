@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Target Inventory Products API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Products",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Product Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3/:tcin",
+            "params": [
+              {
+                "name": "tcin",
+                "value": "",
+                "type": "path",
+                "description": "Target Corporation Item Number (TCIN)"
+              },
+              {
+                "name": "store_id",
+                "value": "",
+                "type": "query",
+                "description": "Store ID for localized pricing and availability"
+              },
+              {
+                "name": "zip",
+                "value": "",
+                "type": "query",
+                "description": "ZIP code for localized pricing"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields to return"
+              }
+            ]
+          },
+          "docs": "Retrieves detailed product information for a given TCIN (Target Corporation Item Number) including title, description, images, pricing, and attributes."
+        },
+        {
+          "info": {
+            "name": "List Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3",
+            "params": [
+              {
+                "name": "tcins",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of TCINs"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category ID to filter products"
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "Brand name to filter products"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              }
+            ]
+          },
+          "docs": "Returns a list of products by TCINs or other filter criteria."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

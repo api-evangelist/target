@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Target Inventory Search API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query string"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Category filter"
+              },
+              {
+                "name": "brand",
+                "value": "",
+                "type": "query",
+                "description": "Brand filter"
+              },
+              {
+                "name": "price_min",
+                "value": "",
+                "type": "query",
+                "description": "Minimum price filter"
+              },
+              {
+                "name": "price_max",
+                "value": "",
+                "type": "query",
+                "description": "Maximum price filter"
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "Sort order"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              }
+            ]
+          },
+          "docs": "Search Target's product catalog by keyword, category, brand, or other criteria. Returns matching products with relevance scoring."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

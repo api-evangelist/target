@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Target Inventory API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Inventory",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Product Fulfillment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.target.com/products/v3/:tcin/fulfillment",
+            "params": [
+              {
+                "name": "tcin",
+                "value": "",
+                "type": "path",
+                "description": "Target Corporation Item Number"
+              },
+              {
+                "name": "store_id",
+                "value": "",
+                "type": "query",
+                "description": "Store ID for in-store availability"
+              },
+              {
+                "name": "zip",
+                "value": "",
+                "type": "query",
+                "description": "ZIP code for ship-to-home availability"
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "Latitude for nearby store lookup"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "Longitude for nearby store lookup"
+              }
+            ]
+          },
+          "docs": "Returns fulfillment and availability information for a product at a specific store or for online delivery, including ship-to-home, in-store pickup, and drive-up options."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

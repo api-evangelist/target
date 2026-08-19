@@ -1,0 +1,631 @@
+{
+  "item": [
+    {
+      "id": "05e16d1b-e44e-409b-9f0c-6fc34e7478ce",
+      "name": "Products",
+      "description": {
+        "content": "Product catalog and detail operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "97950e78-b7eb-4ae8-8533-02caf991ad2f",
+          "name": "Get Product Details",
+          "request": {
+            "name": "Get Product Details",
+            "description": {
+              "content": "Retrieves detailed product information for a given TCIN (Target Corporation Item Number) including title, description, images, pricing, and attributes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                "v3",
+                ":tcin"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "store_id",
+                  "value": "<string>",
+                  "description": "Store ID for localized pricing and availability"
+                },
+                {
+                  "disabled": false,
+                  "key": "zip",
+                  "value": "<string>",
+                  "description": "ZIP code for localized pricing"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields to return"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tcin",
+                  "description": "(Required) Target Corporation Item Number (TCIN)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c87b16f4-4cd3-44dd-bea3-2a80f3087710",
+              "name": "Product details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "v3",
+                    ":tcin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tcin",
+                      "description": "(Required) Target Corporation Item Number (TCIN)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tcin\": \"string\",\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"brand\": \"string\",\n  \"category\": \"string\",\n  \"images\": [\n    {\n      \"url\": \"https://jgGTSArL.ipajQPj,muzvBM-1chIVtCR\",\n      \"type\": \"string\",\n      \"width\": 3197,\n      \"height\": 3999\n    },\n    {\n      \"url\": \"http://zP.lluok,IMbDm4hsovScDY+,CvMjo6R7o7WGDGnQ4DIhgWfKD4yMEfHZ1lorUQ1b08xLZcCEMsqnk\",\n      \"type\": \"string\",\n      \"width\": 3910,\n      \"height\": 3916\n    }\n  ],\n  \"price\": {\n    \"current_retail\": 3102.7140375663444,\n    \"regular_retail\": 8489.885592312035,\n    \"sale_price\": 1252.0180520286174,\n    \"is_on_sale\": false,\n    \"currency\": \"USD\"\n  },\n  \"rating\": {\n    \"average\": 312.9416901439208,\n    \"count\": 3593\n  },\n  \"dpci\": \"string\",\n  \"upc\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e1249dd-7f5c-4798-8ede-008c63d5c946",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "v3",
+                    ":tcin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tcin",
+                      "description": "(Required) Target Corporation Item Number (TCIN)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d165242-3970-4ef4-8832-40e37d5978bf",
+              "name": "The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "v3",
+                    ":tcin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tcin",
+                      "description": "(Required) Target Corporation Item Number (TCIN)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b5f315d-9b8f-498d-9345-da065a1ca9ea",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "v3",
+                    ":tcin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "store_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zip",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tcin",
+                      "description": "(Required) Target Corporation Item Number (TCIN)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64cbd5fd-ec35-4c78-a864-e4c0564cdd50",
+          "name": "List Products",
+          "request": {
+            "name": "List Products",
+            "description": {
+              "content": "Returns a list of products by TCINs or other filter criteria.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                "v3"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tcins",
+                  "value": "<string>",
+                  "description": "Comma-separated list of TCINs"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "Category ID to filter products"
+                },
+                {
+                  "disabled": false,
+                  "key": "brand",
+                  "value": "<string>",
+                  "description": "Brand name to filter products"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Offset for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef86301d-6705-4019-8a77-ce3c133641bf",
+              "name": "List of products",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "v3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tcins",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "brand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"products\": [\n    {\n      \"tcin\": \"string\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"brand\": \"string\",\n      \"category\": \"string\",\n      \"images\": [\n        {\n          \"url\": \"https://hNCYBjrOMsGcmW.pxwWlpef3NaTmW1Fu7saSTyKGfrxla4Doye\",\n          \"type\": \"string\",\n          \"width\": 5246,\n          \"height\": 8990\n        },\n        {\n          \"url\": \"http://VlMLMnXoyMlZsTiEYn.dikWpZii9FWK12-4zOXPOLolHt5e3LP\",\n          \"type\": \"string\",\n          \"width\": 3765,\n          \"height\": 144\n        }\n      ],\n      \"price\": {\n        \"current_retail\": 3372.2727571127866,\n        \"regular_retail\": 4277.255305513355,\n        \"sale_price\": 7721.971268445904,\n        \"is_on_sale\": false,\n        \"currency\": \"USD\"\n      },\n      \"rating\": {\n        \"average\": 4706.235595384886,\n        \"count\": 6265\n      },\n      \"dpci\": \"string\",\n      \"upc\": \"string\"\n    },\n    {\n      \"tcin\": \"string\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"brand\": \"string\",\n      \"category\": \"string\",\n      \"images\": [\n        {\n          \"url\": \"https://NvrBundQTGxuyWiLkfWSyRTHNW.quhvCtXX5c.lSpmeK4CNLMveH,QS-bESaoe,HvMfZk9hPLR0.-16iVZQN81MNrog\",\n          \"type\": \"string\",\n          \"width\": 8340,\n          \"height\": 6918\n        },\n        {\n          \"url\": \"https://Ssk.sqrknFNR1sDbBSS1mGaNZhOXvnOi3UStyq678s\",\n          \"type\": \"string\",\n          \"width\": 7482,\n          \"height\": 7387\n        }\n      ],\n      \"price\": {\n        \"current_retail\": 2330.919429135808,\n        \"regular_retail\": 4165.760471016741,\n        \"sale_price\": 7106.816120501622,\n        \"is_on_sale\": true,\n        \"currency\": \"USD\"\n      },\n      \"rating\": {\n        \"average\": 9388.079399046335,\n        \"count\": 6325\n      },\n      \"dpci\": \"string\",\n      \"upc\": \"string\"\n    }\n  ],\n  \"total\": 1032,\n  \"limit\": 8095,\n  \"offset\": 5327\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0720d79f-550a-43bf-b724-dc92cc6cb176",
+              "name": "Authentication credentials are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "v3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tcins",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "brand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0fbe9c5-ac3f-4714-824c-e93bfa4cf172",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "v3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tcins",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "brand",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "20"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"details\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.target.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "47f40775-7654-4b35-b7a5-e57f66ff0e6c",
+    "name": "Target Inventory Products API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.\n\nContact Support:\n Name: Target Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
