@@ -27,6 +27,11 @@ apis:
   tags:
   - E-Commerce
   - GraphQL
+  - Product
+  - Retail
+  tags_raw:
+  - E-Commerce
+  - GraphQL
   - Products
   - Retail
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
@@ -79,6 +84,8 @@ apis:
   humanURL: https://developer.target.com/
   baseURL: https://api.target.com
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -93,6 +100,8 @@ apis:
   humanURL: https://developer.target.com/
   baseURL: https://api.target.com
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -179,6 +188,14 @@ common:
 - type: LlmsText
   url: https://developer.target.com/llms.txt
 tags:
+  - Fortune 100
+  - E-Commerce
+  - Retail
+  - Product
+  - Inventory
+  - Stores
+  - Order
+tags_raw:
   - Fortune 100
   - E-Commerce
   - Retail
