@@ -16,7 +16,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/target.png
 url: https://raw.githubusercontent.com/api-evangelist/target/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-05-19'
+modified: '2026-08-27'
 description: >-
   Target Corporation is one of the largest retailers in the United States, offering a wide assortment of general
   merchandise and food through more than 1,900 stores and digital channels. Target's technology platform powers partner
@@ -173,8 +173,6 @@ common:
   url: https://github.com/target
 - type: Open Source
   url: https://tech.target.com/open-source
-- type: StatusPage
-  url: https://status.target.com
 - type: JSONSchema
   url: json-schema/target-product-schema.json
 - type: JSONSchema
@@ -185,8 +183,31 @@ common:
   url: json-ld/target-context.jsonld
 - type: Vocabulary
   url: vocabulary/target-vocabulary.yml
-- type: LlmsText
-  url: https://developer.target.com/llms.txt
+- type: LLMsTxt
+  url: https://www.target.com/llms.txt
+- type: LLMsTxt
+  url: llms/target-llms.txt
+- type: WellKnown
+  url: well-known/target-well-known.yml
+- type: Security
+  url: security/target-vulnerability-disclosure.yml
+- type: OAuthScopes
+  url: scopes/target-scopes.yml
+- type: Conformance
+  url: conformance/target-conformance.yml
+- type: Lifecycle
+  url: lifecycle/target-lifecycle.yml
+- type: Conventions
+  url: conventions/target-conventions.yml
+- type: Packages
+  url: packages/target-packages.yml
+- type: TermsOfService
+  url: https://www.target.com/c/terms-conditions/-/N-4sr7l
+- type: PrivacyPolicy
+  url: https://www.target.com/c/target-privacy-policy/-/N-4sr7p
+- type: HelpCenter
+  url: https://help.target.com/
+
 tags:
   - Fortune 100
   - E-Commerce
@@ -207,3 +228,8 @@ tags_raw:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-27'
+  status: enriched
+  artifacts_added: 11
+  pass: local-v1
