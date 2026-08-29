@@ -165,6 +165,9 @@ apis:
   - type: SpectralRules
     url: rules/target-spectral-rules.yml
 common:
+- type: CapabilityMap
+  url: capabilities/target-capability-edges.yml
+  name: target Business Capability Map
 - type: AgenticAccess
   url: agentic-access/target-agentic-access.yml
 - type: VulnerabilityDisclosure
