@@ -1,0 +1,58 @@
+generated: '2026-08-27'
+method: probed
+source: https://oauth.iam.target.com/.well-known/openid-configuration
+docs: https://logonservices.oauth.iam.partnersonline.com/guide/
+description: >-
+  Scopes read verbatim from the scopes_supported array of Target's two OpenID Connect discovery
+  documents. Both issuers advertise the same four scopes. These are identity scopes only — Target
+  publishes no anonymous resource-scope reference for its product, inventory, order or store APIs,
+  because those APIs are documented behind the developer.target.com login. Do not read this list as
+  the full permission surface of Target's APIs; it is the full ANONYMOUSLY DISCOVERABLE surface.
+issuers:
+- issuer: https://oauth.iam.target.com
+  discovery: https://oauth.iam.target.com/.well-known/openid-configuration
+  http_status: 200
+- issuer: https://oauth.iam.partnersonline.com
+  discovery: https://oauth.iam.partnersonline.com/.well-known/openid-configuration
+  http_status: 200
+scope_count: 4
+scopes:
+- name: openid
+  description: Request an ID token; required for any OpenID Connect flow.
+  issuers:
+  - https://oauth.iam.target.com
+  - https://oauth.iam.partnersonline.com
+- name: email
+  description: Release the subject's email address claim to the client.
+  issuers:
+  - https://oauth.iam.target.com
+  - https://oauth.iam.partnersonline.com
+- name: profile
+  description: Release the subject's profile claims to the client.
+  issuers:
+  - https://oauth.iam.target.com
+  - https://oauth.iam.partnersonline.com
+- name: openid_client_registration
+  description: >-
+    Permits dynamic client registration against the issuer's registration_endpoint
+    (/openid/connect/register). Advertised on both issuers.
+  issuers:
+  - https://oauth.iam.target.com
+  - https://oauth.iam.partnersonline.com
+claims_supported:
+- sub
+- iss
+- auth_time
+- acr
+- aud
+- azp
+- exp
+- c_hash
+- at_hash
+- nonce
+gaps:
+- No resource/API scopes are published anonymously; the API catalog behind developer.target.com
+  returns HTTP 401 without a key.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
