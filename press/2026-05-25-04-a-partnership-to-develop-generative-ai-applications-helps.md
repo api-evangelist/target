@@ -1,7 +1,9 @@
 ---
 title: A Partnership to Develop Generative AI Applications Helps ...
 url: https://www.bain.com/client-results/ai/target/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Target" press release artificial intelligence'
 position: 4
 source: serpapi-google

@@ -1,0 +1,40 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  Searched Target's own hosts, the github.com/target organisation (100 most recently updated repos),
+  and the public MCP ecosystem for a first-party Target MCP server.
+status: none
+description: >-
+  Target Corporation ships NO first-party MCP server, hosted or local. Every "Target" MCP server in
+  the ecosystem is third-party: scraper-backed wrappers (Apify, retailerapi.com) or hobby projects
+  that drive Target.com without Target's involvement. None of them is Target-published and none is
+  recorded here as a Target agent surface. No candidate tool list was derived either, because the
+  only OpenAPI documents in this repo are API Evangelist scaffolds whose operations do not exist
+  (see openapi/PROVENANCE.md) — deriving tools from them would manufacture an agent surface out of
+  invented operations.
+deployment:
+  mode: none
+  auth: unknown
+  verified: searched
+probes:
+- url: https://mcp.target.com/
+  status: 0
+  detail: NXDOMAIN — host does not resolve.
+- url: https://www.target.com/mcp
+  status: 404
+- url: https://developer.target.com/mcp
+  status: 200
+  detail: SPA catch-all HTML shell, not an MCP endpoint.
+tools: []
+tool_count: 0
+notes:
+- >-
+  Target IS a named partner in Google's Universal Commerce Protocol (UCP) work on agentic shopping,
+  which is a genuine signal of intent, but a partnership announcement is not a shipped contract and
+  no UCP or MCP endpoint was reachable on any target.com host on 2026-08-27.
+- >-
+  The nearest thing Target publishes to an agent surface today is https://www.target.com/llms.txt —
+  a real, well-formed llms.txt aimed at shopping agents. It is a content map, not a tool surface.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

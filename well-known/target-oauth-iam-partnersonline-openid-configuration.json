@@ -1,0 +1,21 @@
+{
+  "issuer": "https://oauth.iam.partnersonline.com",
+  "authorization_endpoint": "https://oauth.iam.partnersonline.com/auth/oauth/v2/authorize",
+  "token_endpoint": "https://oauth.iam.partnersonline.com/auth/oauth/v2/token",
+  "jwks_uri": "https://oauth.iam.partnersonline.com/openid/connect/jwks.json",
+  "response_types_supported": ["code", "token id_token"],
+  "subject_types_supported": ["pairwise"],
+  "id_token_signing_alg_values_supported": ["RS256", "HS256"],
+  "userinfo_endpoint": "https://oauth.iam.partnersonline.com/openid/connect/v1/target/userinfo",
+  "registration_endpoint": "https://oauth.iam.partnersonline.com/openid/connect/register",
+  "scopes_supported": ["openid", "email", "profile", "openid_client_registration"],
+  "claims_supported": ["sub", "iss", "auth_time", "acr", "aud", "azp", "exp", "c_hash", "at_hash", "nonce"],
+  "grant_types_supported": ["authorization_code", "implicit"],
+  "acr_values_supported": ["0"],
+  "token_endpoint_auth_methods_supported": ["client_secret_basic", "client_secret_post"],
+  "display_values_supported": ["page"],
+  "claim_types_supported": ["normal"],
+  "service_documentation": "https://oauth.iam.partnersonline.com/apidocs/auth/oauth/v2/swagger",
+  "ui_locales_supported": ["en-US"],
+  "userinfo_signing_alg_values_supported": ["RS256", "HS256"]
+}

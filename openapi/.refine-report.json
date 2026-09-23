@@ -1,12 +1,7 @@
 {
   "provider": "target",
   "sources": [
-    "target-inventory-api-openapi.yml",
-    "target-orders-api-openapi.yml",
-    "target-products-api-openapi.yml",
-    "target-search-api-openapi.yml",
-    "target-status-api-openapi.yml",
-    "target-stores-api-openapi.yml"
+    "_ae-authored/target-target-api-openapi.yml"
   ],
   "outputs": [
     "target-inventory-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "target-target-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "target-inventory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "target-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "target-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "target-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "target-status-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "target-stores-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

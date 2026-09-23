@@ -1,0 +1,60 @@
+generated: '2026-08-27'
+method: probed
+source: Live probes of Target's API edges and status host on 2026-08-27.
+description: >-
+  Target publishes no anonymous versioning policy, no deprecation policy, no RFC 8594 Sunset/Deprecation
+  header documentation and no working public status page. What CAN be observed is real deprecation
+  behaviour at the edge: the legacy Redsky product endpoint returns HTTP 410 Gone, which is a correct
+  and unusually disciplined retirement signal — Target is doing the right thing at runtime without
+  documenting the policy behind it.
+versioning:
+  scheme: path
+  documented: false
+  detail: >-
+    Version segments appear in the live Redsky path space (/redsky_aggregations/v1/..., the retired
+    /v3/pdp/...), so versioning is by URL path, but no published policy states the support window or
+    the notice period for a breaking change.
+  evidence:
+  - url: https://redsky.target.com/redsky_aggregations/v1/web/pdp_client_v1
+    status: 403
+deprecation:
+  policy_published: false
+  sunset_header_documented: false
+  observed_behaviour:
+  - url: https://redsky.target.com/v3/pdp/tcin/12345
+    status: 410
+    detail: >-
+      HTTP 410 Gone on the legacy Redsky product-detail path. 410 (rather than 404) is a deliberate
+      "this existed and has been permanently removed" signal — evidence of a real retirement, though
+      the response carries no Sunset or Deprecation header and no Link to a successor.
+  - url: https://redsky.target.com/redsky_aggregations/v1/web/pdp_client_v1
+    status: 403
+    detail: >-
+      The current-generation path is live but returns 403 behind PerimeterX bot protection
+      (set-cookie _pxhd), so it is not anonymously callable.
+status_page:
+  published: false
+  detail: >-
+    apis.yml carried a StatusPage pointer to https://status.target.com. That host has a DNS CNAME to
+    sites.target.map.fastly.net but the TLS certificate served there does NOT include
+    status.target.com, so the URL cannot be loaded by any client. The pointer has been REMOVED rather
+    than left to rot. No replacement status page was found on any Target host.
+  evidence:
+  - url: https://status.target.com/
+    status: 0
+    detail: 'SSL: no alternative certificate subject name matches target host name (curl 60), after
+      forcing resolution to the Fastly address the DNS record names.'
+sla:
+  published: false
+  detail: No public SLA; Target's API terms are negotiated per partner programme.
+deprecated_operations: []
+notes:
+- >-
+  No `type: Deprecation` and no `type: StatusPage` pointer was emitted, because neither a deprecation
+  policy nor a status page is actually published. The 410 is behaviour, not a policy.
+- >-
+  Highest-leverage lifecycle fix available to Target: publish (or retire the DNS for)
+  status.target.com, and add Sunset/Deprecation headers to the paths already returning 410.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

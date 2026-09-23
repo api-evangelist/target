@@ -1,0 +1,172 @@
+generated: '2026-08-27'
+method: probed
+source: live anonymous HTTP probes of every apis.yml host, every OpenAPI servers[] host, the docs/console host, and the two Target IAM issuers discovered in the developer-portal bundle
+note: >-
+  developer.target.com is a React SPA with a catch-all route: EVERY /.well-known/* path returns
+  HTTP 200 with the same 2,686-byte HTML shell. Those rows are recorded as status 200 with
+  document: false and shell: true — they are NOT served documents and must not be read as hits.
+  The two real hits are the OpenID Connect discovery documents on Target's IAM issuers
+  (oauth.iam.target.com for the corporate/developer portal, oauth.iam.partnersonline.com for the
+  supplier portal), both of which were found by reading the developer.target.com JS bundle rather
+  than by guessing hostnames.
+hosts:
+- host: oauth.iam.target.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: target-oauth-iam-target-openid-configuration.json
+    document: true
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: oauth.iam.partnersonline.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: target-oauth-iam-partnersonline-openid-configuration.json
+    document: true
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: www.target.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: developer.target.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    document: false
+    shell: true
+    note: SPA catch-all — 2,686-byte HTML shell, not a document.
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    document: false
+    shell: true
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    document: false
+    shell: true
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    document: false
+    shell: true
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: text/html
+    document: false
+    shell: true
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    document: false
+    shell: true
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    document: false
+    shell: true
+- host: api.target.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: redsky.target.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: security.target.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    note: >-
+      No security.txt, but the host DOES serve a real vulnerability disclosure policy at
+      https://security.target.com/vdp/ (HTTP 200). See security/target-vulnerability-disclosure.yml.
+- host: corporate.target.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: logonservices.oauth.iam.partnersonline.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+findings:
+- id: dead-service-documentation
+  severity: low
+  detail: >-
+    Both OIDC discovery documents advertise service_documentation pointing at a Swagger definition
+    (https://oauth.iam.target.com/apidocs/auth/oauth/v2/swagger and the partnersonline equivalent).
+    Both return HTTP 404 text/plain "404 page not found". Target's own discovery document therefore
+    points at a machine-readable contract that is not served. This is the single highest-leverage
+    fix available to Target in this profile: restoring those two URLs would publish a real OAuth
+    contract with no other work.
+  probed: '2026-08-27'
+  evidence:
+  - url: https://oauth.iam.target.com/apidocs/auth/oauth/v2/swagger
+    status: 404
+  - url: https://oauth.iam.partnersonline.com/apidocs/auth/oauth/v2/swagger
+    status: 404
+- id: agent-card-absent
+  severity: info
+  detail: >-
+    No A2A Agent Card on any host. Every /.well-known/agent-card.json and /.well-known/agent.json
+    probe returned 404 except developer.target.com, whose SPA catch-all returns the HTML shell.
+    No a2a/ artifact was written and no AgentCard pointer was emitted.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

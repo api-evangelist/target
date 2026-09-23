@@ -1,0 +1,141 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  Anonymous probes of Target's two OIDC issuers, the developer.target.com portal bundle and catalog
+  backend, the Redsky edge, api.target.com and www.target.com. Every assertion below is backed by a
+  URL and the status it actually returned on 2026-08-27.
+description: >-
+  Target's only anonymously verifiable cross-cutting standard conformance is OAuth 2.0 / OpenID
+  Connect, evidenced by two live discovery documents and a live JWKS. Nothing else could be asserted
+  because Target publishes no machine-readable API contract to the public internet: the developer
+  portal is a JS-rendered SPA whose catalog API returns 401 without a key, and the Redsky edge is
+  behind PerimeterX bot protection.
+conformance:
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence:
+  - url: https://oauth.iam.target.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      authorization_endpoint, token_endpoint, grant_types_supported [authorization_code, implicit],
+      token_endpoint_auth_methods_supported [client_secret_basic, client_secret_post].
+  - url: https://oauth.iam.partnersonline.com/.well-known/openid-configuration
+    status: 200
+    detail: Second issuer, identical shape, for Target Partners Online.
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence:
+  - url: https://oauth.iam.target.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      issuer, jwks_uri, userinfo_endpoint, registration_endpoint, id_token_signing_alg_values_supported,
+      subject_types_supported [pairwise], claims_supported — a complete discovery document.
+  - url: https://oauth.iam.target.com/openid/connect/jwks.json
+    status: 200
+    detail: Live JWKS, 8,081 bytes of application/json.
+- id: oidc-dynamic-client-registration
+  name: OpenID Connect Dynamic Client Registration 1.0 (RFC 7591 family)
+  conforms: true
+  evidence:
+  - url: https://oauth.iam.target.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      Advertises registration_endpoint https://oauth.iam.target.com/openid/connect/register and the
+      openid_client_registration scope. Registration itself was not exercised (it is not a read).
+- id: rfc8414
+  name: RFC 8414 OAuth 2.0 Authorization Server Metadata
+  conforms: false
+  evidence:
+  - url: https://oauth.iam.target.com/.well-known/oauth-authorization-server
+    status: 404
+  - url: https://oauth.iam.partnersonline.com/.well-known/oauth-authorization-server
+    status: 404
+    detail: >-
+      Neither issuer serves the RFC 8414 document; discovery is OIDC-only. An MCP client following
+      RFC 9728 / RFC 8414 discovery will not find Target's issuers.
+- id: rfc9728
+  name: RFC 9728 OAuth 2.0 Protected Resource Metadata
+  conforms: false
+  evidence:
+  - url: https://api.target.com/.well-known/oauth-protected-resource
+    status: 404
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence:
+  - url: https://api.target.com/products/v3
+    status: 404
+    detail: >-
+      The api.target.com gateway returns application/xml <Error><Message>Not Found</Message></Error>,
+      not application/problem+json. The developer-portal catalog returns a bespoke JSON envelope
+      {"message":..., "errors":[{"resource":..., "field":..., "reason":...}]}, also not RFC 9457.
+- id: rfc9309-ai-directives
+  name: robots.txt AI/agent directives
+  conforms: false
+  evidence:
+  - url: https://www.target.com/robots.txt
+    status: 200
+    detail: >-
+      Live robots.txt with six sitemaps and a long Disallow list under User-agent: *. It names NO
+      AI crawler (no GPTBot, ClaudeBot, Google-Extended, PerplexityBot, CCBot), so agents are
+      neither explicitly welcomed nor blocked at the robots layer.
+- id: llms-txt
+  name: llms.txt
+  conforms: true
+  evidence:
+  - url: https://www.target.com/llms.txt
+    status: 200
+    detail: >-
+      6,205 bytes of text/plain, correctly formed llms.txt — H1, blockquote summary, three URL-pattern
+      notes, and five sections of annotated links. Saved verbatim to llms/target-llms.txt.
+  - url: https://developer.target.com/llms.txt
+    status: 200
+    detail: >-
+      SOFT 404 — the developer portal SPA shell (text/html, 2,686 bytes). The catalog previously
+      pointed LlmsText here; that pointer has been corrected to www.target.com.
+- id: pagination
+  name: Documented pagination convention
+  conforms: false
+  evidence:
+  - url: https://developer.target.com/api/docs/v1/docs/
+    status: 401
+    detail: No anonymously readable contract, so no pagination convention could be observed.
+- id: idempotency
+  name: Documented idempotency keys
+  conforms: false
+  evidence:
+  - url: https://developer.target.com/api/docs/v1/docs/
+    status: 401
+- id: scim
+  name: SCIM 2.0
+  conforms: false
+  evidence:
+  - url: https://oauth.iam.target.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      No urn:ietf:params:scim:schemas:* URN and no /scim/v2 surface appears anywhere in the
+      anonymously reachable Target identity surface.
+domain_standard:
+  applicable: false
+  detail: >-
+    General-merchandise retail has no regulatory regime with a declared standards[] list in
+    scoring.yml, and no Target-published contract declares a domain standard signature anywhere
+    anonymously reachable. Target's supplier programme is widely described as X12 EDI based, but
+    every source for that is third-party commentary or the gated Partners Online portal — no Target
+    document was fetched that declares an X12 message type, so nothing is asserted here. This is
+    reward-only scoring: an unevidenced conformance is left unclaimed rather than invented.
+  probed:
+  - url: https://www.partnersonline.com/
+    status: 200
+    detail: SPA shell fronting the gated supplier portal; no machine-readable EDI or API contract anonymously.
+compliance_program:
+  published: false
+  detail: >-
+    No trust center and no anonymously published certification list (SOC 2 / ISO 27001 / PCI DSS /
+    HIPAA / FedRAMP) was found on security.target.com or corporate.target.com. probe-security-programs.py
+    returned trust=none. No Compliance pointer was emitted.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

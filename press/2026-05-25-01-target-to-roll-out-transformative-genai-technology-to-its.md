@@ -1,7 +1,9 @@
 ---
 title: Target to Roll Out Transformative GenAI Technology to its ...
 url: https://corporate.target.com/press/release/2024/06/target-to-roll-out-transformative-genai-technology-to-its-store-team-members-chainwide
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Target" press release artificial intelligence'
 position: 1
 source: serpapi-google

@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Target Inventory API
   description: Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.
@@ -82,6 +82,18 @@ components:
           type: string
           format: date
           description: Estimated availability or delivery date
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
     ProductFulfillment:
       type: object
       properties:
@@ -96,19 +108,13 @@ components:
           $ref: '#/components/schemas/FulfillmentOption'
         same_day_delivery:
           $ref: '#/components/schemas/FulfillmentOption'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional error details
   responses:
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found
       content:
@@ -121,12 +127,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
@@ -135,3 +135,34 @@ components:
 externalDocs:
   description: Target Developer Portal
   url: https://developer.target.com/
+x-authored-by: API Evangelist
+x-modeled-from: documentation
+x-provenance:
+  method: scaffold
+  authored-by: API Evangelist
+  published-by-provider: false
+  generated: '2026-05-03'
+  verified: '2026-08-27'
+  verified-by: enrichment pipeline local-v1
+  summary: NOT PUBLISHED BY TARGET. This document was written by the API Evangelist 2026-05 profile sweep, not harvested from a Target source. Every operation it declares was probed against the host it names on 2026-08-27 and every one returned HTTP 404 from Target's own gateway. Treat this file as a modelled sketch of what a Target partner API might look like, never as Target's contract, and do not derive further artifacts from it.
+  probe-evidence:
+  - url: https://api.target.com/products/v3
+    status: 404
+  - url: https://api.target.com/products/v3/12345
+    status: 404
+  - url: https://api.target.com/products/v3/search
+    status: 404
+  - url: https://api.target.com/stores/v3
+    status: 404
+  - url: https://api.target.com/orders/v1
+    status: 404
+  - url: https://api.target.com/status
+    status: 404
+  control-probes:
+  - url: https://redsky.target.com/redsky_aggregations/v1/web/pdp_client_v1
+    status: 403
+    detail: A REAL Target route — it exists and is gated, proving the 404s above are route-absence rather than a blanket edge denial.
+  - url: https://redsky.target.com/v3/pdp/tcin/12345
+    status: 410
+    detail: A REAL retired Target route — 410 Gone, again proving the gateway distinguishes absent from present.
+  contact: kin@apievangelist.com

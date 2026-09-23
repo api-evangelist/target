@@ -1,7 +1,9 @@
 ---
 title: Target's Using Artificial Intelligence to Make Your Shopping ...
 url: https://corporate.target.com/news-features/article/2023/12/artificial-intelligence
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Target" press release artificial intelligence'
 position: 2
 source: serpapi-google

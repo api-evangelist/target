@@ -1,0 +1,41 @@
+generated: '2026-08-27'
+method: searched
+source: >-
+  npm registry search, the github.com/target organisation listing (100 most recently updated repos),
+  and the apis.yml link set. No SDK, CLI or SourceCode property exists in apis.yml to derive from.
+description: >-
+  Target publishes NO first-party client library for any of its APIs, in any registry. This is a real
+  finding, not an unfinished search: Target's open-source presence is large and active, but it is
+  infrastructure and security tooling for other engineers, not client SDKs for Target's own retail
+  APIs. The reason is structural — Target's APIs are documented behind developer.target.com, which is
+  open only to Target team members and third parties with an existing Target relationship, so there is
+  no public consumer for a public SDK.
+package_count: 0
+official_package_count: 0
+packages: []
+context:
+  github_organization: https://github.com/target
+  public_repos_sampled: 100
+  detail: >-
+    The github.com/target organisation ships widely used open-source projects — goalert (2.8k stars,
+    Go, on-call scheduling), strelka (999 stars, Python, file scanning), lorri (980 stars, Rust, nix),
+    matrixprofile-ts (741 stars, Python), flottbot (369 stars, Go, ARCHIVED), pod-reaper, halogen,
+    data-validator, theta-idl, row-types, lite-for-jdbc, native_memory_allocator. None of them is a
+    client for a Target API; they are internal platform tools released outward.
+  registries_checked:
+  - registry: npm
+    endpoint: https://registry.npmjs.org/-/v1/search
+    result: no Target Corporation scope or maintainer namespace; every "praxis"/"target" hit belongs
+      to unrelated publishers.
+    version: null
+  - registry: pkg.go.dev / GitHub source
+    result: Go projects (goalert, flottbot, impeller, pod-reaper) are consumable as modules but are
+      tools, not API clients.
+    version: null
+notes:
+- >-
+  Because there is no official SDK, NO `type: SDKs` pointer was emitted in apis.yml. sdk_count for
+  Target is a true zero, backed by a search rather than by an unwritten file.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

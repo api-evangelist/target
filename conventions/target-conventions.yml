@@ -1,0 +1,148 @@
+generated: '2026-08-27'
+method: probed
+source: >-
+  Live observation of Target's edges (api.target.com gateway, redsky.target.com, the
+  developer.target.com catalog backend) plus the two OIDC discovery documents. No anonymously
+  readable API contract exists, so every convention below is either OBSERVED at the edge or recorded
+  as unknown. Nothing is inferred from the scaffold OpenAPIs in openapi/ (see openapi/PROVENANCE.md).
+description: >-
+  Cross-cutting runtime semantics for Target's API surface. The honest headline is that almost none
+  of it is knowable without a Target relationship: the contract, the pagination style, the idempotency
+  posture and the rate-limit signalling are all behind developer.target.com, which returns 401 to
+  anonymous callers. The two things that ARE observable — the OAuth/OIDC posture and the error
+  envelopes at each edge — are recorded with the URL and status that produced them.
+authentication:
+  style: oauth2-oidc
+  documented: true
+  detail: >-
+    Authorization-code and implicit flows against one of two issuers (oauth.iam.target.com for
+    corporate/developer, oauth.iam.partnersonline.com for suppliers). Bearer access tokens; JWKS
+    published; pairwise subject identifiers. See authentication/target-authentication.yml.
+  evidence:
+  - url: https://oauth.iam.target.com/.well-known/openid-configuration
+    status: 200
+idempotency:
+  supported: unknown
+  documented: false
+  header: null
+  detail: >-
+    No idempotency header, scope or retention window is anonymously documented. NOT recorded as `na`:
+    Target plainly operates write surfaces (order management, item setup, invoicing through Partners
+    Online), so the correct value is unknown-because-gated, not not-applicable.
+  evidence:
+  - url: https://developer.target.com/api/docs/v1/docs/
+    status: 401
+pagination:
+  style: unknown
+  documented: false
+  params: []
+  response_fields: []
+  evidence:
+  - url: https://developer.target.com/api/docs/v1/docs/
+    status: 401
+  - url: https://developer.target.com/api/docs/v1/docs/count/
+    status: 401
+    detail: >-
+      The catalog backend exposes a sibling /count/ route next to its collection route, which is a
+      recognisable count-alongside-list pattern, but the parameters are not anonymously readable.
+field_expansion:
+  supported: unknown
+  documented: false
+metadata:
+  supported: unknown
+  documented: false
+request_id_tracing:
+  supported: false
+  documented: false
+  detail: >-
+    No X-Request-Id / X-Correlation-Id was returned on any anonymous response from api.target.com or
+    redsky.target.com. Responses carry Fastly/Varnish trace headers (x-served-by, x-cache, x-timer)
+    which identify the CDN node, not an application request id.
+  evidence:
+  - url: https://api.target.com/
+    status: 404
+    headers_observed:
+    - server
+    - retry-after
+    - via
+    - x-served-by
+    - x-cache
+    - x-timer
+    - strict-transport-security
+    - alt-svc
+versioning:
+  style: path
+  documented: false
+  detail: See lifecycle/target-lifecycle.yml.
+error_envelope:
+  standard: none
+  rfc9457: false
+  shapes:
+  - surface: api.target.com (partner API gateway)
+    content_type: application/xml
+    example_shape: <Error><Message>Not Found</Message><Detail>...</Detail></Error>
+    evidence:
+      url: https://api.target.com/products/v3
+      status: 404
+  - surface: developer.target.com (API catalog backend)
+    content_type: application/json
+    example_shape: '{"message": "...", "errors": [{"resource": "...", "field": "...", "reason": "..."}]}'
+    evidence:
+      url: https://developer.target.com/api/docs/v1/docs/
+      status: 401
+  - surface: redsky.target.com (aggregation edge)
+    content_type: text/html
+    example_shape: PerimeterX interstitial HTML
+    evidence:
+      url: https://redsky.target.com/redsky_aggregations/v1/web/pdp_client_v1
+      status: 403
+  detail: >-
+    Three Target edges return three different error media types — XML, JSON and HTML — and none of
+    them is application/problem+json. An agent integrating across Target surfaces needs three parsers.
+rate_limit_signaling:
+  headers: []
+  documented: false
+  exhaustion_status: unknown
+  detail: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After-on-429 was observed. api.target.com does return a
+    bare `retry-after: 0` alongside its 404, which is a Varnish artefact rather than a throttling
+    signal. See rate-limits/target-rate-limits.yml.
+  evidence:
+  - url: https://api.target.com/
+    status: 404
+reversibility:
+  grade: unknown
+  applicable: true
+  detail: >-
+    NOT `na`. Target unambiguously operates write surfaces an agent could act on — order placement and
+    cancellation, returns, item setup, purchase orders and invoicing through Partners Online, Target
+    Plus seller operations. But no reversal operation, no operationId and above all no WINDOW is
+    anonymously documented anywhere, because the contract is behind a login. An agent acting on
+    Target's APIs today cannot learn from any public source whether an action it is about to take can
+    be taken back, or for how long.
+    No window is asserted here. Inventing one is the single error in this pipeline that could cost a
+    user real money, and Target's guest-facing return windows (which ARE public) are retail policy for
+    humans, not an API reversal contract, so they are deliberately not transcribed into this block.
+  reversal_operations: []
+  evidence:
+  - url: https://developer.target.com/api/docs/v1/docs/
+    status: 401
+    detail: Catalog backend rejects anonymous callers, so no write operation is enumerable.
+  - url: https://developer.target.com/docs/getting-started
+    status: 200
+    detail: SPA shell only — 2,686 bytes of HTML, no rendered content for a non-JS client.
+dry_run_mode:
+  supported: unknown
+  documented: false
+  detail: No sandbox or test mode is anonymously documented. See the absence of a sandbox/ artifact.
+cross_links:
+- >-
+  errors — no errors/ artifact was written; an RFC 9457 catalog cannot be derived from the scaffold
+  OpenAPIs, and the real error envelopes are recorded in error_envelope above.
+- lifecycle/target-lifecycle.yml
+- authentication/target-authentication.yml
+- rate-limits/target-rate-limits.yml
+- scopes/target-scopes.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
