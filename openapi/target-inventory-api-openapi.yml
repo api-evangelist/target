@@ -68,7 +68,40 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    ProductFulfillment:
+      type: object
+      properties:
+        tcin:
+          type: string
+          description: Target Corporation Item Number
+        ship_to_home:
+          $ref: '#/components/schemas/FulfillmentOption'
+        in_store_pickup:
+          $ref: '#/components/schemas/FulfillmentOption'
+        drive_up:
+          $ref: '#/components/schemas/FulfillmentOption'
+        same_day_delivery:
+          $ref: '#/components/schemas/FulfillmentOption'
     FulfillmentOption:
       type: object
       properties:
@@ -94,39 +127,6 @@ components:
         details:
           type: string
           description: Additional error details
-    ProductFulfillment:
-      type: object
-      properties:
-        tcin:
-          type: string
-          description: Target Corporation Item Number
-        ship_to_home:
-          $ref: '#/components/schemas/FulfillmentOption'
-        in_store_pickup:
-          $ref: '#/components/schemas/FulfillmentOption'
-        drive_up:
-          $ref: '#/components/schemas/FulfillmentOption'
-        same_day_delivery:
-          $ref: '#/components/schemas/FulfillmentOption'
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

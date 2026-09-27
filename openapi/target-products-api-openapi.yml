@@ -114,6 +114,25 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     ProductImage:
       type: object
@@ -128,20 +147,6 @@ components:
         width:
           type: integer
         height:
-          type: integer
-    ProductList:
-      type: object
-      properties:
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductDetail'
-        total:
-          type: integer
-          description: Total number of matching products
-        limit:
-          type: integer
-        offset:
           type: integer
     Price:
       type: object
@@ -161,27 +166,20 @@ components:
         currency:
           type: string
           default: USD
-    Error:
+    ProductList:
       type: object
       properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional error details
-    Rating:
-      type: object
-      properties:
-        average:
-          type: number
-          description: Average customer rating (0-5)
-        count:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetail'
+        total:
           type: integer
-          description: Total number of ratings
+          description: Total number of matching products
+        limit:
+          type: integer
+        offset:
+          type: integer
     ProductDetail:
       type: object
       properties:
@@ -214,25 +212,27 @@ components:
         upc:
           type: string
           description: Universal Product Code
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Rating:
+      type: object
+      properties:
+        average:
+          type: number
+          description: Average customer rating (0-5)
+        count:
+          type: integer
+          description: Total number of ratings
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
   securitySchemes:
     bearerAuth:
       type: http

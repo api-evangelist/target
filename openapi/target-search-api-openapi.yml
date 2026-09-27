@@ -93,6 +93,19 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     ProductImage:
       type: object
@@ -108,36 +121,6 @@ components:
           type: integer
         height:
           type: integer
-    Price:
-      type: object
-      properties:
-        current_retail:
-          type: number
-          description: Current retail price
-        regular_retail:
-          type: number
-          description: Regular (non-sale) retail price
-        sale_price:
-          type: number
-          description: Sale price if applicable
-        is_on_sale:
-          type: boolean
-          description: Whether the product is currently on sale
-        currency:
-          type: string
-          default: USD
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional error details
     SearchResults:
       type: object
       properties:
@@ -156,30 +139,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SearchFacet'
-    Rating:
+    Price:
       type: object
       properties:
-        average:
+        current_retail:
           type: number
-          description: Average customer rating (0-5)
-        count:
-          type: integer
-          description: Total number of ratings
-    SearchFacet:
-      type: object
-      properties:
-        name:
+          description: Current retail price
+        regular_retail:
+          type: number
+          description: Regular (non-sale) retail price
+        sale_price:
+          type: number
+          description: Sale price if applicable
+        is_on_sale:
+          type: boolean
+          description: Whether the product is currently on sale
+        currency:
           type: string
-          description: Facet name (brand, category, price, etc.)
-        values:
-          type: array
-          items:
-            type: object
-            properties:
-              value:
-                type: string
-              count:
-                type: integer
+          default: USD
     ProductDetail:
       type: object
       properties:
@@ -212,19 +189,42 @@ components:
         upc:
           type: string
           description: Universal Product Code
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
+    Rating:
+      type: object
+      properties:
+        average:
+          type: number
+          description: Average customer rating (0-5)
+        count:
+          type: integer
+          description: Total number of ratings
+    SearchFacet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Facet name (brand, category, price, etc.)
+        values:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              count:
+                type: integer
   securitySchemes:
     bearerAuth:
       type: http
