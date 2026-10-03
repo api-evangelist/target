@@ -97,41 +97,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    Address:
-      type: object
-      properties:
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zip:
-          type: string
-        country:
-          type: string
-          default: US
-    StoreHours:
-      type: object
-      properties:
-        day:
-          type: string
-          description: Day of week
-        open:
-          type: string
-          description: Opening time (HH:MM)
-        close:
-          type: string
-          description: Closing time (HH:MM)
-    StoreList:
-      type: object
-      properties:
-        stores:
-          type: array
-          items:
-            $ref: '#/components/schemas/Store'
-        total:
-          type: integer
     Store:
       type: object
       properties:
@@ -161,6 +126,41 @@ components:
           items:
             type: string
           description: Store features (pharmacy, Starbucks, optical, etc.)
+    StoreHours:
+      type: object
+      properties:
+        day:
+          type: string
+          description: Day of week
+        open:
+          type: string
+          description: Opening time (HH:MM)
+        close:
+          type: string
+          description: Closing time (HH:MM)
+    StoreList:
+      type: object
+      properties:
+        stores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Store'
+        total:
+          type: integer
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: string
+        country:
+          type: string
+          default: US
     Error:
       type: object
       properties:

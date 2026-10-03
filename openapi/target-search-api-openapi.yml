@@ -93,52 +93,7 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    ProductImage:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: Image URL
-        type:
-          type: string
-          description: Image type (primary, alternate, lifestyle)
-        width:
-          type: integer
-        height:
-          type: integer
-    SearchResults:
-      type: object
-      properties:
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductDetail'
-        total:
-          type: integer
-          description: Total matching results
-        limit:
-          type: integer
-        offset:
-          type: integer
-        facets:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchFacet'
     Price:
       type: object
       properties:
@@ -157,6 +112,44 @@ components:
         currency:
           type: string
           default: USD
+    SearchFacet:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Facet name (brand, category, price, etc.)
+        values:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              count:
+                type: integer
+    Rating:
+      type: object
+      properties:
+        average:
+          type: number
+          description: Average customer rating (0-5)
+        count:
+          type: integer
+          description: Total number of ratings
+    ProductImage:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Image URL
+        type:
+          type: string
+          description: Image type (primary, alternate, lifestyle)
+        width:
+          type: integer
+        height:
+          type: integer
     ProductDetail:
       type: object
       properties:
@@ -201,30 +194,37 @@ components:
         details:
           type: string
           description: Additional error details
-    Rating:
+    SearchResults:
       type: object
       properties:
-        average:
-          type: number
-          description: Average customer rating (0-5)
-        count:
-          type: integer
-          description: Total number of ratings
-    SearchFacet:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Facet name (brand, category, price, etc.)
-        values:
+        products:
           type: array
           items:
-            type: object
-            properties:
-              value:
-                type: string
-              count:
-                type: integer
+            $ref: '#/components/schemas/ProductDetail'
+        total:
+          type: integer
+          description: Total matching results
+        limit:
+          type: integer
+        offset:
+          type: integer
+        facets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchFacet'
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
