@@ -97,6 +97,30 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    StoreHours:
+      type: object
+      properties:
+        day:
+          type: string
+          description: Day of week
+        open:
+          type: string
+          description: Opening time (HH:MM)
+        close:
+          type: string
+          description: Closing time (HH:MM)
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
     Store:
       type: object
       properties:
@@ -126,27 +150,6 @@ components:
           items:
             type: string
           description: Store features (pharmacy, Starbucks, optical, etc.)
-    StoreHours:
-      type: object
-      properties:
-        day:
-          type: string
-          description: Day of week
-        open:
-          type: string
-          description: Opening time (HH:MM)
-        close:
-          type: string
-          description: Closing time (HH:MM)
-    StoreList:
-      type: object
-      properties:
-        stores:
-          type: array
-          items:
-            $ref: '#/components/schemas/Store'
-        total:
-          type: integer
     Address:
       type: object
       properties:
@@ -161,18 +164,15 @@ components:
         country:
           type: string
           default: US
-    Error:
+    StoreList:
       type: object
       properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional error details
+        stores:
+          type: array
+          items:
+            $ref: '#/components/schemas/Store'
+        total:
+          type: integer
   responses:
     NotFound:
       description: The requested resource was not found

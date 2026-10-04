@@ -115,6 +115,18 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
     Price:
       type: object
       properties:
@@ -133,28 +145,19 @@ components:
         currency:
           type: string
           default: USD
-    Rating:
+    ProductList:
       type: object
       properties:
-        average:
-          type: number
-          description: Average customer rating (0-5)
-        count:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetail'
+        total:
           type: integer
-          description: Total number of ratings
-    ProductImage:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: Image URL
-        type:
-          type: string
-          description: Image type (primary, alternate, lifestyle)
-        width:
+          description: Total number of matching products
+        limit:
           type: integer
-        height:
+        offset:
           type: integer
     ProductDetail:
       type: object
@@ -188,32 +191,29 @@ components:
         upc:
           type: string
           description: Universal Product Code
-    ProductList:
+    Rating:
       type: object
       properties:
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductDetail'
-        total:
+        average:
+          type: number
+          description: Average customer rating (0-5)
+        count:
           type: integer
-          description: Total number of matching products
-        limit:
-          type: integer
-        offset:
-          type: integer
-    Error:
+          description: Total number of ratings
+    ProductImage:
       type: object
       properties:
-        code:
+        url:
           type: string
-          description: Error code
-        message:
+          format: uri
+          description: Image URL
+        type:
           type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional error details
+          description: Image type (primary, alternate, lifestyle)
+        width:
+          type: integer
+        height:
+          type: integer
   responses:
     NotFound:
       description: The requested resource was not found
