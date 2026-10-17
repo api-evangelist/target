@@ -115,36 +115,6 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Human-readable error message
-        details:
-          type: string
-          description: Additional error details
-    Price:
-      type: object
-      properties:
-        current_retail:
-          type: number
-          description: Current retail price
-        regular_retail:
-          type: number
-          description: Regular (non-sale) retail price
-        sale_price:
-          type: number
-          description: Sale price if applicable
-        is_on_sale:
-          type: boolean
-          description: Whether the product is currently on sale
-        currency:
-          type: string
-          default: USD
     ProductList:
       type: object
       properties:
@@ -159,6 +129,41 @@ components:
           type: integer
         offset:
           type: integer
+    ProductImage:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Image URL
+        type:
+          type: string
+          description: Image type (primary, alternate, lifestyle)
+        width:
+          type: integer
+        height:
+          type: integer
+    Rating:
+      type: object
+      properties:
+        average:
+          type: number
+          description: Average customer rating (0-5)
+        count:
+          type: integer
+          description: Total number of ratings
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: string
+          description: Additional error details
     ProductDetail:
       type: object
       properties:
@@ -191,36 +196,25 @@ components:
         upc:
           type: string
           description: Universal Product Code
-    Rating:
+    Price:
       type: object
       properties:
-        average:
+        current_retail:
           type: number
-          description: Average customer rating (0-5)
-        count:
-          type: integer
-          description: Total number of ratings
-    ProductImage:
-      type: object
-      properties:
-        url:
+          description: Current retail price
+        regular_retail:
+          type: number
+          description: Regular (non-sale) retail price
+        sale_price:
+          type: number
+          description: Sale price if applicable
+        is_on_sale:
+          type: boolean
+          description: Whether the product is currently on sale
+        currency:
           type: string
-          format: uri
-          description: Image URL
-        type:
-          type: string
-          description: Image type (primary, alternate, lifestyle)
-        width:
-          type: integer
-        height:
-          type: integer
+          default: USD
   responses:
-    NotFound:
-      description: The requested resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Authentication credentials are missing or invalid
       content:
@@ -229,6 +223,12 @@ components:
             $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found
       content:
         application/json:
           schema:
