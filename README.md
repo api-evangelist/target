@@ -81,90 +81,42 @@ Target Corporation is one of the largest retailers in the United States, offerin
 ## Timestamps
 
 - **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+- **Modified:** 2026-10-21
 
 ## APIs
 
-### Target API
-
-Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.
-
-- **Human URL:** [https://developer.target.com/](https://developer.target.com/)
-- **Base URL:** `https://api.target.com`
-
-#### Tags
-
-- E-Commerce
-- Inventory
-- Orders
-- Products
-- Retail
-- Stores
-
-#### Properties
-
-- [Documentation](https://developer.target.com/)
-- [OpenAPI](openapi/target-target-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/target-target-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/target-target-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Spectral Rules](rules/target-spectral-rules.yml)
-
 ### Target Redsky API
 
-Redsky is Target's internal aggregation API platform that converts GraphQL queries into client-managed REST APIs. It serves product data, pricing, promotions, and fulfillment information for Target.com and mobile applications. The platform manages 200+ unique APIs across 30 clients backed by 50+ integrations.
+Redsky is Target's internal aggregation API platform, described by Target's engineering team on tech.target.com, that turns GraphQL queries into client-managed REST APIs serving product, price, promotion and fulfillment data to Target.com and Target's mobile apps. It is internal infrastructure: Target does not license it to third parties.
 
 - **Human URL:** [https://tech.target.com/blog/empowering-clients-api](https://tech.target.com/blog/empowering-clients-api)
-- **Base URL:** `https://redsky.target.com`
-
-#### Tags
-
-- E-Commerce
-- GraphQL
-- Products
-- Retail
-
-#### Properties
-
-- [Documentation](https://tech.target.com/blog/empowering-clients-api)
-- [Postman Collection](collections/target-target-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/target-target-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [GraphQL notes](graphql/target-graphql.md)
 
 ### Target Partner API
 
-Target's partner API program enables technology vendors, affiliates, and supply chain partners to integrate with Target's retail operations including product catalog, inventory management, order fulfillment, and store data.
+Target runs a partner-gated developer program at developer.target.com, open to Target team members and third parties with an existing Target relationship. Access is by partner onboarding.
 
 - **Human URL:** [https://developer.target.com/](https://developer.target.com/)
-- **Base URL:** `https://api.target.com`
 
-#### Tags
+## Not published by Target
 
-- E-Commerce
-- Inventory
-- Partners
-- Retail
-- Suppliers
+Honestly absent — recorded here so their absence is not mistaken for an oversight:
 
-#### Properties
+- No public API reference, base URL, or machine-readable OpenAPI for the partner program
+- No public contract for Redsky, which is internal and not licensed to third parties
+- No public API pricing or plan tiers
+- No published rate limits
 
-- [Documentation](https://developer.target.com/)
-- [Postman Collection](collections/target-target-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/target-target-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Earlier scaffold OpenAPIs (written by an API Evangelist sweep without a Target source; every path returned 404 on api.target.com) and every artifact derived from them were moved to [`_scaffold/`](_scaffold/README.md) on 2026-10-21. They are not Target's and are not part of this profile.
 
 ## Common Properties
 
 - [LinkedIn](https://www.linkedin.com/company/target)
 - [Website](https://www.target.com)
-- [Developer  Portal](https://developer.target.com/)
+- [Developer Portal](https://developer.target.com/)
 - [Blog](https://tech.target.com)
-- [Git Hub  Org](https://github.com/target)
-- [Open  Source](https://tech.target.com/open-source)
-- [Status Page](https://status.target.com)
-- [JSON Schema](json-schema/target-product-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/target-store-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/target-product-structure.json)
-- [JSON-LD](json-ld/target-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Vocabulary](vocabulary/target-vocabulary.yml)
-- [L L Ms Txt](https://developer.target.com/llms.txt)
+- [GitHub Org](https://github.com/target)
+- [Open Source](https://tech.target.com/open-source)
 
 ## Maintainers
 

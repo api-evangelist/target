@@ -8,32 +8,31 @@ deliveryModel:
   label: Hosted service · you call their endpoint
   confidence: high
   source:
-  - openapi
-  - pricing
+  - website
   generated: '2026-08-28'
   method: derived
 specificationVersion: '0.23'
 accessModel:
-  pricing: enterprise
-  onboarding: self-serve
+  pricing: unknown
+  onboarding: request
   trial: false
   try_now: false
   public: false
-  label: Enterprise · Self-serve signup
-  confidence: high
+  label: Pricing unknown · Partner program (onboarding on request)
+  confidence: medium
+  note: Target's developer program at developer.target.com is partner-gated; Target publishes no API pricing, plans
+    or self-serve signup.
   source:
-  - plans
-  - authentication
-  generated: '2026-07-22'
+  - website
+  generated: '2026-10-21'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/target.png
 url: https://raw.githubusercontent.com/api-evangelist/target/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-08-27'
-description: >-
-  Target Corporation is one of the largest retailers in the United States, offering a wide assortment of general
-  merchandise and food through more than 1,900 stores and digital channels. Target's technology platform powers partner
-  integrations, internal services, and open-source tooling across their retail operations.
+modified: '2026-10-21'
+description: Target Corporation is one of the largest retailers in the United States, offering a wide assortment
+  of general merchandise and food through more than 1,900 stores and digital channels. Target's technology platform
+  powers partner integrations, internal services, and open-source tooling across their retail operations.
 apis:
 - aid: target:target-redsky-api
   name: Target Redsky API
@@ -48,17 +47,16 @@ apis:
   - Products
   - Retail
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://redsky.target.com
   humanURL: https://tech.target.com/blog/empowering-clients-api
   properties:
   - url: https://tech.target.com/blog/empowering-clients-api
     type: Documentation
   - url: graphql/target-graphql.md
     type: GraphQL
-  description: >-
-    Redsky is Target's internal aggregation API platform that converts GraphQL queries into client-managed
-    REST APIs. It serves product data, pricing, promotions, and fulfillment information for Target.com
-    and mobile applications. The platform manages 200+ unique APIs across 30 clients backed by 50+ integrations.
+  description: 'Redsky is Target''s internal aggregation API platform, described by Target''s engineering team on
+    tech.target.com, that turns GraphQL queries into client-managed REST APIs serving product, price, promotion
+    and fulfillment data to Target.com and Target''s mobile apps. It is internal infrastructure: Target does not
+    license it to third parties and publishes no public reference or machine-readable contract for it.'
 - aid: target:target-partner-api
   name: Target Partner API
   tags:
@@ -68,115 +66,17 @@ apis:
   - Retail
   - Suppliers
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  baseURL: https://api.target.com
   humanURL: https://developer.target.com/
   properties:
   - url: https://developer.target.com/
     type: Documentation
-  description: >-
-    Target's partner API program enables technology vendors, affiliates, and supply chain partners to
-    integrate with Target's retail operations including product catalog, inventory management, order fulfillment,
-    and store data.
-- aid: target:target-inventory-api
-  name: target Inventory API
-  description: Store and online inventory availability
-  humanURL: https://developer.target.com/
-  baseURL: https://api.target.com
-  tags:
-  - Inventory
-  properties:
-  - type: OpenAPI
-    url: openapi/target-inventory-api-openapi.yml
-  - type: Documentation
-    url: https://developer.target.com/
-  - type: SpectralRules
-    url: rules/target-spectral-rules.yml
-- aid: target:target-orders-api
-  name: target Orders API
-  description: Order management for partners
-  humanURL: https://developer.target.com/
-  baseURL: https://api.target.com
-  tags:
-  - Order
-  tags_raw:
-  - Orders
-  properties:
-  - type: OpenAPI
-    url: openapi/target-orders-api-openapi.yml
-  - type: Documentation
-    url: https://developer.target.com/
-  - type: SpectralRules
-    url: rules/target-spectral-rules.yml
-- aid: target:target-products-api
-  name: target Products API
-  description: Product catalog and detail operations
-  humanURL: https://developer.target.com/
-  baseURL: https://api.target.com
-  tags:
-  - Product
-  tags_raw:
-  - Products
-  properties:
-  - type: OpenAPI
-    url: openapi/target-products-api-openapi.yml
-  - type: Documentation
-    url: https://developer.target.com/
-  - type: SpectralRules
-    url: rules/target-spectral-rules.yml
-- aid: target:target-search-api
-  name: target Search API
-  description: Product search and discovery
-  humanURL: https://developer.target.com/
-  baseURL: https://api.target.com
-  tags:
-  - Search
-  properties:
-  - type: OpenAPI
-    url: openapi/target-search-api-openapi.yml
-  - type: Documentation
-    url: https://developer.target.com/
-  - type: SpectralRules
-    url: rules/target-spectral-rules.yml
-- aid: target:target-status-api
-  name: target Status API
-  description: API health and status
-  humanURL: https://developer.target.com/
-  baseURL: https://api.target.com
-  tags:
-  - Status
-  properties:
-  - type: OpenAPI
-    url: openapi/target-status-api-openapi.yml
-  - type: Documentation
-    url: https://developer.target.com/
-  - type: SpectralRules
-    url: rules/target-spectral-rules.yml
-- aid: target:target-stores-api
-  name: target Stores API
-  description: Store locator and store information
-  humanURL: https://developer.target.com/
-  baseURL: https://api.target.com
-  tags:
-  - Stores
-  properties:
-  - type: OpenAPI
-    url: openapi/target-stores-api-openapi.yml
-  - type: Documentation
-    url: https://developer.target.com/
-  - type: SpectralRules
-    url: rules/target-spectral-rules.yml
+  description: Target runs a partner-gated developer program at developer.target.com, open to Target team members
+    and third parties with an existing Target relationship. Target publishes no public API reference, machine-readable
+    specification, pricing or rate limits for it; access is by partner onboarding.
 common:
-- type: Plans
-  url: plans/target-plans-pricing.yml
-- type: RateLimits
-  url: rate-limits/target-rate-limits.yml
-- type: FinOps
-  url: finops/target-finops.yml
 - type: CapabilityMap
   url: capabilities/target-capability-edges.yml
   name: target Business Capability Map
-- type: AgenticAccess
-  url: agentic-access/target-agentic-access.yml
 - type: VulnerabilityDisclosure
   url: security/target-vulnerability-disclosure.yml
 - type: DomainSecurity
@@ -195,16 +95,6 @@ common:
   url: https://github.com/target
 - type: Open Source
   url: https://tech.target.com/open-source
-- type: JSONSchema
-  url: json-schema/target-product-schema.json
-- type: JSONSchema
-  url: json-schema/target-store-schema.json
-- type: JSONStructure
-  url: json-structure/target-product-structure.json
-- type: JSONLD
-  url: json-ld/target-context.jsonld
-- type: Vocabulary
-  url: vocabulary/target-vocabulary.yml
 - type: LLMsTxt
   url: https://www.target.com/llms.txt
 - type: LLMsTxt
@@ -229,24 +119,23 @@ common:
   url: https://www.target.com/c/target-privacy-policy/-/N-4sr7p
 - type: HelpCenter
   url: https://help.target.com/
-
 tags:
-  - Fortune 100
-  - E-Commerce
-  - Retail
-  - Product
-  - Inventory
-  - Stores
-  - Order
+- Fortune 100
+- E-Commerce
+- Retail
+- Product
+- Inventory
+- Stores
+- Order
 tags_raw:
-  - Fortune 100
-  - E-Commerce
-  - Retail
-  - Products
-  - Inventory
-  - Fortune 100
-  - Stores
-  - Orders
+- Fortune 100
+- E-Commerce
+- Retail
+- Products
+- Inventory
+- Fortune 100
+- Stores
+- Orders
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -255,3 +144,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 11
   pass: local-v1
+x-coverage:
+  state: unreadable
+  reason: no-machine-readable-spec
+  detail: Target's developer program at developer.target.com is partner-gated. Target publishes no public API reference
+    or machine-readable specification. Scaffold OpenAPIs written by an API Evangelist sweep (no Target source; every
+    path 404 on api.target.com) and everything derived from them were quarantined to _scaffold/ on 2026-10-21.
+  reviewed: '2026-10-21'
