@@ -1,4 +1,4 @@
-# target (target)
+# Target
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,107 +66,184 @@
 
 Target Corporation is one of the largest retailers in the United States, offering a wide assortment of general merchandise and food through more than 1,900 stores and digital channels. Target's technology platform powers partner integrations, internal services, and open-source tooling across their retail operations.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/target/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/target/refs/heads/main/apis.yml)
+**Areas:** Fortune 100 · E-Commerce · Retail · Product · Inventory · Stores · Order
 
-## Tags
+## Target on APIs.io
 
-- E-Commerce
-- Retail
-- Products
-- Inventory
-- Fortune 100
-- Stores
-- Orders
+Everything profiled for Target is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/target/](https://apis.io/providers/target/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (8)
 
-- **Created:** 2024-01-01
-- **Modified:** 2026-05-19
+- [Target Redsky API](https://apis.io/apis/target/target-redsky-api/) — Redsky is Target's internal aggregation API platform that converts GraphQL queries into client-managed REST APIs. It serves product data, pricing,…
+- [Target Partner API](https://apis.io/apis/target/target-partner-api/) — Target's partner API program enables technology vendors, affiliates, and supply chain partners to integrate with Target's retail operations including…
+- [target Inventory API](https://apis.io/apis/target/target-inventory-api/) — Store and online inventory availability
+- [target Orders API](https://apis.io/apis/target/target-orders-api/) — Order management for partners
+- [target Products API](https://apis.io/apis/target/target-products-api/) — Product catalog and detail operations
+- [target Search API](https://apis.io/apis/target/target-search-api/) — Product search and discovery
+- [target Status API](https://apis.io/apis/target/target-status-api/) — API health and status
+- [target Stores API](https://apis.io/apis/target/target-stores-api/) — Store locator and store information
 
-## APIs
+### Published properties
 
-### Target API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Target provides partner APIs for product catalog access, inventory availability, order management, and store information. These APIs enable technology partners and affiliates to integrate with Target's retail platform. The Redsky aggregation platform powers client-managed REST APIs built on GraphQL queries covering product, price, promotion, and fulfillment data.
+#### GraphQL (1)
 
-- **Human URL:** [https://developer.target.com/](https://developer.target.com/)
-- **Base URL:** `https://api.target.com`
+GraphQL schemas.
 
-#### Tags
+- [target GraphQL API](https://apis.io/graphqls/target/target-graphql/)
 
-- E-Commerce
-- Inventory
-- Orders
-- Products
-- Retail
-- Stores
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://developer.target.com/)
-- [OpenAPI](openapi/target-target-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/target-target-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/target-target-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Spectral Rules](rules/target-spectral-rules.yml)
+- [Target Agentic Access](https://apis.io/agentic-access/target/target-agentic-access/)
 
-### Target Redsky API
+#### JSON Schema (2)
 
-Redsky is Target's internal aggregation API platform that converts GraphQL queries into client-managed REST APIs. It serves product data, pricing, promotions, and fulfillment information for Target.com and mobile applications. The platform manages 200+ unique APIs across 30 clients backed by 50+ integrations.
+The data models the API reads and writes.
 
-- **Human URL:** [https://tech.target.com/blog/empowering-clients-api](https://tech.target.com/blog/empowering-clients-api)
-- **Base URL:** `https://redsky.target.com`
+- [Target Product](https://apis.io/schemas/target/target-product/)
+- [Target Store](https://apis.io/schemas/target/target-store/)
 
-#### Tags
+#### JSON Structure (1)
 
-- E-Commerce
-- GraphQL
-- Products
-- Retail
+Data models expressed in JSON Structure.
 
-#### Properties
+- [Target Product Structure](https://apis.io/json-structure/target/target-product-structure/)
 
-- [Documentation](https://tech.target.com/blog/empowering-clients-api)
-- [Postman Collection](collections/target-target-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/target-target-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### JSON-LD (1)
 
-### Target Partner API
+Linked-data contexts for the provider's vocabulary.
 
-Target's partner API program enables technology vendors, affiliates, and supply chain partners to integrate with Target's retail operations including product catalog, inventory management, order fulfillment, and store data.
+- [Target Context](https://apis.io/jsonld/target/target-context/)
 
-- **Human URL:** [https://developer.target.com/](https://developer.target.com/)
-- **Base URL:** `https://api.target.com`
+#### Vocabulary (1)
 
-#### Tags
+The provider's domain terms, defined.
 
-- E-Commerce
-- Inventory
-- Partners
-- Retail
-- Suppliers
+- [Target Vocabulary](https://apis.io/vocabularies/target/target-vocabulary/)
 
-#### Properties
+#### Examples (4)
 
-- [Documentation](https://developer.target.com/)
-- [Postman Collection](collections/target-target-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/target-target-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Example requests and responses.
 
-## Common Properties
+- [Target Get Product Example](https://apis.io/examples/target/target-get-product-example/)
+- [Target Get Product Fulfillment Example](https://apis.io/examples/target/target-get-product-fulfillment-example/)
+- [Target List Stores Example](https://apis.io/examples/target/target-list-stores-example/)
+- [Target Search Products Example](https://apis.io/examples/target/target-search-products-example/)
 
-- [LinkedIn](https://www.linkedin.com/company/target)
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [Target Inventory API](https://apis.io/collections/target/open-target-inventory-api/)
+- [Target Inventory Orders API](https://apis.io/collections/target/open-target-orders-api/)
+- [Target Inventory Products API](https://apis.io/collections/target/open-target-products-api/)
+- [Target Inventory Search API](https://apis.io/collections/target/open-target-search-api/)
+- [Target Inventory Status API](https://apis.io/collections/target/open-target-status-api/)
+- [Target Inventory Stores API](https://apis.io/collections/target/open-target-stores-api/)
+- [Target API](https://apis.io/collections/target/open-target-target-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Target — jsonschema rules](https://apis.io/rules/target/target-jsonschema-spectral-rules/)
+- [Target API Rules](https://apis.io/rules/target/target-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Target Authentication](https://apis.io/security/target/target-authentication/)
+- [Target Domain Security](https://apis.io/security/target/target-domain-security/)
+- [Target Vulnerability Disclosure](https://apis.io/security/target/target-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Target Scopes](https://apis.io/scopes/target/target-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Target Plans Pricing](https://apis.io/plans/target/target-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Target Rate Limits](https://apis.io/rate-limits/target/target-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Target Finops](https://apis.io/finops/target/target-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.target.com)
-- [Developer  Portal](https://developer.target.com/)
 - [Blog](https://tech.target.com)
-- [Git Hub  Org](https://github.com/target)
-- [Open  Source](https://tech.target.com/open-source)
-- [Status Page](https://status.target.com)
-- [JSON Schema](json-schema/target-product-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/target-store-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/target-product-structure.json)
-- [JSON-LD](json-ld/target-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Vocabulary](vocabulary/target-vocabulary.yml)
-- [L L Ms Txt](https://developer.target.com/llms.txt)
+- [Terms of service](https://www.target.com/c/terms-conditions/-/N-4sr7l)
+- [Privacy policy](https://www.target.com/c/target-privacy-policy/-/N-4sr7p)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 32.7** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 19.0 |
+| Contract governance | 45.5 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 14.3 |
+| Access clarity | 26.3 |
+
+**Agent readiness 35.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/target/](https://apis.io/providers/target/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Target: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/target/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
